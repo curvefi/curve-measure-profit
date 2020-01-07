@@ -2,6 +2,7 @@
 
 import time
 import config
+from retry import retry
 from web3.auto.infura import w3
 
 ###
@@ -10,6 +11,7 @@ FILE_FMT = '{0}, {1:.6f}, {2:.6f}, {3:.6f}\n'
 swap = w3.eth.contract(abi=config.SWAP_ABI, address=config.SWAP_ADDRESS)
 
 
+@retry(Exception, delay=5, tries=5, backoff=2)
 def get_info():
     virtual_price = swap.caller.get_virtual_price() / 10 ** 18
     dai2usdc = swap.caller.get_dy_underlying(0, 1, 10 ** 18) / 10 ** 6
@@ -25,4 +27,4 @@ if __name__ == '__main__':
         with open('swap-stats.csv', 'a') as f:
             f.write(FILE_FMT.format(*results))
         print(PRINT_FMT.format(*results))
-        time.sleep(5)
+        time.sleep(60)
