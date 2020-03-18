@@ -64,7 +64,7 @@ class CompoundPool(Pool):
 
     def get_rate(self, i, block=None):
         if not block:
-            block = self.current_block
+            block = self.w3.eth.getBlock('latest')['number']
         kw = {'block_identifier': block}
         use_lending = (self.coins[i].address != self.underlying_coins[i].address)
 

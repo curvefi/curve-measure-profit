@@ -2,6 +2,7 @@
 """
 Recording full statistics about the state of Curve pools
 """
+from retry import retry
 from web3.exceptions import BadFunctionCallOutput
 from .abi import ABI, TOKEN_ABI
 
@@ -31,17 +32,14 @@ class Pool:
             except BadFunctionCallOutput:
                 break
 
-    @property
-    def current_block(self):
-        return self.w3.eth.getBlock('latest')['number']
-
     def get_rate(self, i, block=None):
         return 10 ** 18
 
-    # XXX retry
-    def fetch_stats(self, block=None):
-        if not block:
-            block = self.current_block
+    @retry(Exception, delay=5, tries=5, backoff=2)
+    def fetch_stats(self, block='latest'):
+        full_block = self.w3.eth.getBlock(block)
+        block = full_block['number']
+        timestamp = full_block['timestamp']
         kw = {'block_identifier': block}
         return {
             'A': self.pool.A().call(**kw),
@@ -49,6 +47,7 @@ class Pool:
             'admin_fee': self.pool.fee().call(**kw),
             'supply': self.token.totalSupply().call(**kw),
             'virtual_price': self.pool.get_virtual_price().call(**kw),
+            'timestamp': timestamp,
             'balances': [
                 self.pool.balances(i).call(**kw) for i in range(self.N)],
             'rates': [self.get_rate(i, block=block) for i in range(self.N)]
