@@ -34,7 +34,7 @@ if __name__ == '__main__':
         if current_block > start_block:
             for block in range(start_block + 1, current_block + 1):
                 for i, pool in enumerate(pools):
-                    stats[i][block] = pool.fetch_stats()
+                    stats[i][block] = pool.fetch_stats(block)
                 print(block)
                 if stats[i][block]['trades']:
                     pprint(stats[i][block]['trades'])
