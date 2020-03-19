@@ -12,8 +12,10 @@ class Pool:
         if not w3:
             from web3.auto.infura import w3 as infura_w3
             self.w3 = infura_w3
-        self.pool = self.w3.eth.contract(abi=ABI, address=pool).functions
-        self.token = self.w3.eth.contract(abi=TOKEN_ABI, address=token).functions
+        self.pool_contract = self.w3.eth.contract(abi=ABI, address=pool)
+        self.pool = self.pool_contract.functions
+        self.token_contract = self.w3.eth.contract(abi=TOKEN_ABI, address=token)
+        self.token = self.token_contract.functions
 
         self.N = 0
         self.underlying_coins = []
@@ -41,6 +43,28 @@ class Pool:
         block = full_block['number']
         timestamp = full_block['timestamp']
         kw = {'block_identifier': block}
+        rates = [self.get_rate(i, block=block) for i in range(self.N)]
+        trades = []
+
+        exchange_filter = self.pool_contract.events.TokenExchange.createFilter(fromBlock=block, toBlock=block)
+        exchange_underlying_filter = self.pool_contract.events.TokenExchangeUnderlying.createFilter(fromBlock=block, toBlock=block)
+
+        for e in exchange_underlying_filter.get_all_entries():
+            ev = e['args']
+            trades.append({
+                'sold_id': ev['sold_id'],
+                'tokens_sold': ev['tokens_sold'],
+                'bought_id': ev['bought_id'],
+                'tokens_bought': ev['tokens_bought']})
+
+        for e in exchange_filter.get_all_entries():
+            ev = e['args']
+            trades.append({
+                'sold_id': ev['sold_id'],
+                'tokens_sold': ev['tokens_sold'] * rates[ev['sold_id']] // 1e18,
+                'bought_id': ev['bought_id'],
+                'tokens_bought': ev['tokens_bought'] * rates[ev['bought_id']] // 1e18})
+
         return {
             'A': self.pool.A().call(**kw),
             'fee': self.pool.fee().call(**kw),
@@ -50,5 +74,6 @@ class Pool:
             'timestamp': timestamp,
             'balances': [
                 self.pool.balances(i).call(**kw) for i in range(self.N)],
-            'rates': [self.get_rate(i, block=block) for i in range(self.N)]
+            'rates': rates,
+            'trades': trades
         }

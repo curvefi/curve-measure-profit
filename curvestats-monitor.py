@@ -2,6 +2,7 @@
 
 import os
 from time import sleep
+from pprint import pprint
 
 os.environ['WEB3_INFURA_PROJECT_ID'] = 'efd35366fc0445f98df93cc418832774'
 
@@ -16,7 +17,7 @@ stats = [{} for _ in pools]  # <- DB instead of this
 
 
 if __name__ == '__main__':
-    start_block = w3.eth.getBlock('latest')['number'] - 10  # XXX pull from DB
+    start_block = w3.eth.getBlock('latest')['number'] - 100  # XXX pull from DB
     print('Monitor started')
 
     # Initial data
@@ -35,6 +36,8 @@ if __name__ == '__main__':
                 for i, pool in enumerate(pools):
                     stats[i][block] = pool.fetch_stats()
                 print(block)
+                if stats[i][block]['trades']:
+                    pprint(stats[i][block]['trades'])
             start_block = current_block
 
         sleep(15)

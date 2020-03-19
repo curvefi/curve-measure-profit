@@ -28,10 +28,37 @@ ABI = json.loads("""[
     "type": "uint256",
     "name": "tokens_bought",
     "indexed": false
+   }
+  ],
+  "anonymous": false,
+  "type": "event"
+ },
+ {
+  "name": "TokenExchangeUnderlying",
+  "inputs": [
+   {
+    "type": "address",
+    "name": "buyer",
+    "indexed": true
+   },
+   {
+    "type": "int128",
+    "name": "sold_id",
+    "indexed": false
    },
    {
     "type": "uint256",
-    "name": "fee",
+    "name": "tokens_sold",
+    "indexed": false
+   },
+   {
+    "type": "int128",
+    "name": "bought_id",
+    "indexed": false
+   },
+   {
+    "type": "uint256",
+    "name": "tokens_bought",
     "indexed": false
    }
   ],
@@ -49,6 +76,21 @@ ABI = json.loads("""[
    {
     "type": "uint256[2]",
     "name": "token_amounts",
+    "indexed": false
+   },
+   {
+    "type": "uint256[2]",
+    "name": "fees",
+    "indexed": false
+   },
+   {
+    "type": "uint256",
+    "name": "invariant",
+    "indexed": false
+   },
+   {
+    "type": "uint256",
+    "name": "token_supply",
     "indexed": false
    }
   ],
@@ -71,6 +113,43 @@ ABI = json.loads("""[
    {
     "type": "uint256[2]",
     "name": "fees",
+    "indexed": false
+   },
+   {
+    "type": "uint256",
+    "name": "token_supply",
+    "indexed": false
+   }
+  ],
+  "anonymous": false,
+  "type": "event"
+ },
+ {
+  "name": "RemoveLiquidityImbalance",
+  "inputs": [
+   {
+    "type": "address",
+    "name": "provider",
+    "indexed": true
+   },
+   {
+    "type": "uint256[2]",
+    "name": "token_amounts",
+    "indexed": false
+   },
+   {
+    "type": "uint256[2]",
+    "name": "fees",
+    "indexed": false
+   },
+   {
+    "type": "uint256",
+    "name": "invariant",
+    "indexed": false
+   },
+   {
+    "type": "uint256",
+    "name": "token_supply",
     "indexed": false
    }
   ],
@@ -117,17 +196,17 @@ ABI = json.loads("""[
     "unit": "sec"
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "A",
     "indexed": false
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "fee",
     "indexed": false
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "admin_fee",
     "indexed": false
    }
@@ -139,17 +218,17 @@ ABI = json.loads("""[
   "name": "NewParameters",
   "inputs": [
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "A",
     "indexed": false
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "fee",
     "indexed": false
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "admin_fee",
     "indexed": false
    }
@@ -173,11 +252,11 @@ ABI = json.loads("""[
     "name": "_pool_token"
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "_A"
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "_fee"
    }
   ],
@@ -197,7 +276,30 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1069395
+  "gas": 1084167
+ },
+ {
+  "name": "calc_token_amount",
+  "outputs": [
+   {
+    "type": "uint256",
+    "name": "out"
+   }
+  ],
+  "inputs": [
+   {
+    "type": "uint256[2]",
+    "name": "amounts"
+   },
+   {
+    "type": "bool",
+    "name": "deposit"
+   }
+  ],
+  "constant": true,
+  "payable": false,
+  "type": "function",
+  "gas": 4239939
  },
  {
   "name": "add_liquidity",
@@ -209,14 +311,13 @@ ABI = json.loads("""[
    },
    {
     "type": "uint256",
-    "unit": "sec",
-    "name": "deadline"
+    "name": "min_mint_amount"
    }
   ],
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 2258504
+  "gas": 6479997
  },
  {
   "name": "get_dy",
@@ -243,7 +344,34 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 2527952
+  "gas": 2543681
+ },
+ {
+  "name": "get_dx",
+  "outputs": [
+   {
+    "type": "uint256",
+    "name": "out"
+   }
+  ],
+  "inputs": [
+   {
+    "type": "int128",
+    "name": "i"
+   },
+   {
+    "type": "int128",
+    "name": "j"
+   },
+   {
+    "type": "uint256",
+    "name": "dy"
+   }
+  ],
+  "constant": true,
+  "payable": false,
+  "type": "function",
+  "gas": 2543687
  },
  {
   "name": "get_dy_underlying",
@@ -270,7 +398,34 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 2527921
+  "gas": 2543506
+ },
+ {
+  "name": "get_dx_underlying",
+  "outputs": [
+   {
+    "type": "uint256",
+    "name": "out"
+   }
+  ],
+  "inputs": [
+   {
+    "type": "int128",
+    "name": "i"
+   },
+   {
+    "type": "int128",
+    "name": "j"
+   },
+   {
+    "type": "uint256",
+    "name": "dy"
+   }
+  ],
+  "constant": true,
+  "payable": false,
+  "type": "function",
+  "gas": 2543512
  },
  {
   "name": "exchange",
@@ -291,17 +446,12 @@ ABI = json.loads("""[
    {
     "type": "uint256",
     "name": "min_dy"
-   },
-   {
-    "type": "uint256",
-    "unit": "sec",
-    "name": "deadline"
    }
   ],
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 5167089
+  "gas": 5184573
  },
  {
   "name": "exchange_underlying",
@@ -322,17 +472,12 @@ ABI = json.loads("""[
    {
     "type": "uint256",
     "name": "min_dy"
-   },
-   {
-    "type": "uint256",
-    "unit": "sec",
-    "name": "deadline"
    }
   ],
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 5177748
+  "gas": 5200817
  },
  {
   "name": "remove_liquidity",
@@ -343,11 +488,6 @@ ABI = json.loads("""[
     "name": "_amount"
    },
    {
-    "type": "uint256",
-    "unit": "sec",
-    "name": "deadline"
-   },
-   {
     "type": "uint256[2]",
     "name": "min_amounts"
    }
@@ -355,7 +495,7 @@ ABI = json.loads("""[
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 146036
+  "gas": 153898
  },
  {
   "name": "remove_liquidity_imbalance",
@@ -367,36 +507,35 @@ ABI = json.loads("""[
    },
    {
     "type": "uint256",
-    "unit": "sec",
-    "name": "deadline"
+    "name": "max_burn_amount"
    }
   ],
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 2327978
+  "gas": 6479708
  },
  {
   "name": "commit_new_parameters",
   "outputs": [],
   "inputs": [
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "amplification"
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "new_fee"
    },
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "new_admin_fee"
    }
   ],
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 144817
+  "gas": 146105
  },
  {
   "name": "apply_new_parameters",
@@ -405,7 +544,7 @@ ABI = json.loads("""[
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 129762
+  "gas": 133512
  },
  {
   "name": "revert_new_parameters",
@@ -414,7 +553,7 @@ ABI = json.loads("""[
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 21085
+  "gas": 21835
  },
  {
   "name": "commit_transfer_ownership",
@@ -428,7 +567,7 @@ ABI = json.loads("""[
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 73162
+  "gas": 74512
  },
  {
   "name": "apply_transfer_ownership",
@@ -437,7 +576,7 @@ ABI = json.loads("""[
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 58018
+  "gas": 60568
  },
  {
   "name": "revert_transfer_ownership",
@@ -446,7 +585,7 @@ ABI = json.loads("""[
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 21175
+  "gas": 21925
  },
  {
   "name": "withdraw_admin_fees",
@@ -455,7 +594,25 @@ ABI = json.loads("""[
   "constant": false,
   "payable": false,
   "type": "function",
-  "gas": 9403
+  "gas": 12831
+ },
+ {
+  "name": "kill_me",
+  "outputs": [],
+  "inputs": [],
+  "constant": false,
+  "payable": false,
+  "type": "function",
+  "gas": 37878
+ },
+ {
+  "name": "unkill_me",
+  "outputs": [],
+  "inputs": [],
+  "constant": false,
+  "payable": false,
+  "type": "function",
+  "gas": 22015
  },
  {
   "name": "coins",
@@ -474,7 +631,7 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1380
+  "gas": 2190
  },
  {
   "name": "underlying_coins",
@@ -493,7 +650,7 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1410
+  "gas": 2220
  },
  {
   "name": "balances",
@@ -512,13 +669,13 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1440
+  "gas": 2250
  },
  {
   "name": "A",
   "outputs": [
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "out"
    }
   ],
@@ -526,13 +683,13 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1271
+  "gas": 2081
  },
  {
   "name": "fee",
   "outputs": [
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "out"
    }
   ],
@@ -540,13 +697,13 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1301
+  "gas": 2111
  },
  {
   "name": "admin_fee",
   "outputs": [
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "out"
    }
   ],
@@ -554,7 +711,7 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1331
+  "gas": 2141
  },
  {
   "name": "owner",
@@ -568,7 +725,7 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1361
+  "gas": 2171
  },
  {
   "name": "admin_actions_deadline",
@@ -583,7 +740,7 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1391
+  "gas": 2201
  },
  {
   "name": "transfer_ownership_deadline",
@@ -598,13 +755,13 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1421
+  "gas": 2231
  },
  {
   "name": "future_A",
   "outputs": [
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "out"
    }
   ],
@@ -612,13 +769,13 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1451
+  "gas": 2261
  },
  {
   "name": "future_fee",
   "outputs": [
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "out"
    }
   ],
@@ -626,13 +783,13 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1481
+  "gas": 2291
  },
  {
   "name": "future_admin_fee",
   "outputs": [
    {
-    "type": "int128",
+    "type": "uint256",
     "name": "out"
    }
   ],
@@ -640,7 +797,7 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1511
+  "gas": 2321
  },
  {
   "name": "future_owner",
@@ -654,7 +811,7 @@ ABI = json.loads("""[
   "constant": true,
   "payable": false,
   "type": "function",
-  "gas": 1541
+  "gas": 2351
  }
 ]""")
 TOKEN_ABI = json.loads("""[
