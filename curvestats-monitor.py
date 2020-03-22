@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import lmdb
+import json
 import os
 from time import sleep
 from multiprocessing import Pool
@@ -16,7 +18,7 @@ pools = [
     (CompoundPool, ("0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56", "0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2"))
 ]
 
-stats = [{} for _ in pools]  # <- DB instead of this
+DB_NAME = 'curvestats.lmdb'  # <- DB [block][pool#]{...}
 
 
 def init_pools():
@@ -30,6 +32,10 @@ def fetch_stats(block, i=0):
     return pools[i].fetch_stats(block)
 
 
+def int2uid(value):
+    return int.to_bytes(value, 4, 'big')
+
+
 mpool = Pool(MPOOL_SIZE)
 init_pools()
 
@@ -37,37 +43,56 @@ init_pools()
 if __name__ == '__main__':
     from web3.auto.infura import w3
     init_pools()
+
+    db = lmdb.open(DB_NAME)
+    db.set_mapsize(2 ** 29)
+
     start_block = w3.eth.getBlock('latest')['number'] - 100  # XXX pull from DB
     print('Monitor started')
 
     # Initial data
-    for i, pool in enumerate(pools):
-        stats[i] = {
-                    'N': pool.N, 'decimals': pool.decimals,
-                    'token': pool.token.address, 'pool': pool.pool.address,
-                    'coins': [pool.coins[j].address for j in range(pool.N)],
-                    'underlying_coins': [pool.underlying_coins[j].address for j in range(pool.N)]}
+    with db.begin(write=True) as tx:
+        if not tx.get(int2uid(0)):
+            tx.put(int2uid(0), json.dumps(
+                        [{'N': pool.N, 'decimals': pool.decimals,
+                          'token': pool.token.address, 'pool': pool.pool.address,
+                          'coins': [pool.coins[j].address for j in range(pool.N)],
+                         'underlying_coins': [pool.underlying_coins[j].address for j in range(pool.N)]}
+                         for pool in pools]).encode())
 
     while True:
-        current_block = w3.eth.getBlock('latest')['number']
+        current_block = w3.eth.getBlock('latest')['number'] + 1
 
         if current_block - start_block > MPOOL_SIZE:
             blocks = range(start_block, start_block + MPOOL_SIZE)
-            for i in range(len(pools)):
-                newstats = mpool.map(partial(fetch_stats, i=i), blocks)
-                for b, s in zip(blocks, newstats):
-                    stats[i][b] = s
-            print('...', start_block)
+            with db.begin(write=True) as tx:
+                if not tx.get(int2uid(blocks[-1])):
+                    stats = {}
+                    for i in range(len(pools)):
+                        newstats = mpool.map(partial(fetch_stats, i=i), blocks)
+                        for b, s in zip(blocks, newstats):
+                            if b not in stats:
+                                stats[b] = [None] * len(pools)
+                            stats[b][i] = s
+                    for b, v in stats.items():
+                        tx.put(int2uid(b), json.dumps(v).encode())
+                    print('...', start_block)
+                else:
+                    print('... already in DB:', start_block)
             start_block += MPOOL_SIZE
 
         else:
             if current_block > start_block:
-                for block in range(start_block + 1, current_block + 1):
-                    for i, pool in enumerate(pools):
-                        stats[i][block] = pool.fetch_stats(block)
-                    print(block)
-                    if stats[i][block]['trades']:
-                        pprint(stats[i][block]['trades'])
+                for block in range(start_block, current_block):
+                    with db.begin(write=True) as tx:
+                        if not tx.get(int2uid(block)):
+                            stats = [None] * len(pools)
+                            for i, pool in enumerate(pools):
+                                stats[i] = pool.fetch_stats(block)
+                            print(block)
+                            if stats[i]['trades']:
+                                pprint(stats[i]['trades'])
+                            tx.put(int2uid(block), json.dumps(stats).encode())
                 start_block = current_block
 
             sleep(15)
