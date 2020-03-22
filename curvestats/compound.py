@@ -68,19 +68,10 @@ class CompoundPool(Pool):
         kw = {'block_identifier': block}
         use_lending = (self.coins[i].address != self.underlying_coins[i].address)
 
-        result = 10 ** 18 // 10 ** self.decimals[i]
         rate = 10 ** 18
         if use_lending:
             rate = self.coins[i].exchangeRateStored().call(**kw)
             supply_rate = self.coins[i].supplyRatePerBlock().call(**kw)
             old_block = self.coins[i].accrualBlockNumber().call(**kw)
             rate += rate * supply_rate * (block - old_block) // 10 ** 18
-        result *= rate
-        return result
-
-        if self.coins[i].address != self.underlying_coins[i].address:
-            rate = self.coins[i].exchangeRateStored().call(**kw)
-            return rate
-
-        else:
-            return 10 ** 18
+        return rate
