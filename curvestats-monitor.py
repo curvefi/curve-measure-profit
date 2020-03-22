@@ -2,20 +2,21 @@
 
 import lmdb
 import json
-import os
+import config  # noqa
 from time import sleep
 from multiprocessing import Pool
 from functools import partial
-from pprint import pprint
-
-os.environ['WEB3_INFURA_PROJECT_ID'] = 'efd35366fc0445f98df93cc418832774'
 
 from curvestats.compound import CompoundPool
+from curvestats.y import YPool
 
-MPOOL_SIZE = 25
+MPOOL_SIZE = 10
 
 pools = [
-    (CompoundPool, ("0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56", "0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2"))
+    (CompoundPool, ("0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56", "0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2")),
+    (CompoundPool, ("0x52EA46506B9CC5Ef470C5bf89f17Dc28bB35D85C", "0x9fC689CCaDa600B6DF723D9E47D84d76664a1F23")),
+    (YPool, ("0x45F783CCE6B7FF23B2ab2D70e416cdb7D6055f51", "0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8")),
+    (YPool, ("0x79a8C46DeA5aDa233ABaFFD40F3A0A2B1e5A4F27", "0x3B3Ac5386837Dc563660FB6a0937DFAa5924333B"))
 ]
 
 DB_NAME = 'curvestats.lmdb'  # <- DB [block][pool#]{...}
@@ -89,9 +90,7 @@ if __name__ == '__main__':
                             stats = [None] * len(pools)
                             for i, pool in enumerate(pools):
                                 stats[i] = pool.fetch_stats(block)
-                            print(block)
-                            if stats[i]['trades']:
-                                pprint(stats[i]['trades'])
+                            print(block, [len(s['trades']) for s in stats])
                             tx.put(int2uid(block), json.dumps(stats).encode())
                 start_block = current_block
 
