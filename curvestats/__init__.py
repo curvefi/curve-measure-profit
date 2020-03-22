@@ -44,6 +44,10 @@ class Pool:
         timestamp = full_block['timestamp']
         kw = {'block_identifier': block}
         rates = [self.get_rate(i, block=block) for i in range(self.N)]
+        balances = [self.pool.balances(i).call(**kw) for i in range(self.N)]
+        is_deposited = True
+        for b in balances:
+            is_deposited *= (b > 0)
         trades = []
 
         exchange_filter = self.pool_contract.events.TokenExchange.createFilter(fromBlock=block, toBlock=block)
@@ -70,10 +74,9 @@ class Pool:
             'fee': self.pool.fee().call(**kw),
             'admin_fee': self.pool.fee().call(**kw),
             'supply': self.token.totalSupply().call(**kw),
-            'virtual_price': self.pool.get_virtual_price().call(**kw),
+            'virtual_price': is_deposited and self.pool.get_virtual_price().call(**kw),
             'timestamp': timestamp,
-            'balances': [
-                self.pool.balances(i).call(**kw) for i in range(self.N)],
+            'balances': balances,
             'rates': rates,
             'trades': trades
         }
