@@ -2,7 +2,7 @@
 
 import lmdb
 import json
-import config  # noqa
+import config_infura  # noqa
 from time import sleep
 from multiprocessing import Pool
 from functools import partial
@@ -50,7 +50,8 @@ if __name__ == '__main__':
     db = lmdb.open(DB_NAME)
     db.set_mapsize(2 ** 29)
 
-    start_block = w3.eth.getBlock('latest')['number'] - 100  # XXX pull from DB
+    start_block = 9554041
+    # start_block = w3.eth.getBlock('latest')['number'] - 100  # XXX pull from DB
     print('Monitor started')
 
     # Initial data
