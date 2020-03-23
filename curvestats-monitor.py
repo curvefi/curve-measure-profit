@@ -10,7 +10,7 @@ from functools import partial
 from curvestats.compound import CompoundPool
 from curvestats.y import YPool
 
-MPOOL_SIZE = 10
+MPOOL_SIZE = 40
 
 pools = {
         'compound': (CompoundPool, ("0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56", "0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2"), 9554041),
