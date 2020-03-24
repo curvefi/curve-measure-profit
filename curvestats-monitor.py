@@ -2,6 +2,7 @@
 
 import lmdb
 import json
+import time
 import config_infura  # noqa
 from time import sleep
 from multiprocessing import Pool
@@ -66,7 +67,12 @@ if __name__ == '__main__':
                          for k, pool in pools.items()}).encode())
 
     while True:
-        current_block = w3.eth.getBlock('latest')['number'] + 1
+        while True:
+            try:
+                current_block = w3.eth.getBlock('latest')['number'] + 1
+                break
+            except Exception:
+                time.sleep(10)
 
         if current_block - start_block > MPOOL_SIZE:
             blocks = range(start_block, start_block + MPOOL_SIZE)
