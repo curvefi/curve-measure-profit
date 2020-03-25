@@ -57,7 +57,7 @@ if __name__ == "__main__":
                     t0 = tokens[0] * 10 ** (18 - decimals[pool][pair[0]])
                     t1 = tokens[1] * 10 ** (18 - decimals[pool][pair[1]])
                     if t1 > 0:
-                        price = t0 / t1
+                        price = t1 / t0
                         if jpair not in obj['prices']:
                             obj['prices'][jpair] = []
                         obj['prices'][jpair].append(price)
