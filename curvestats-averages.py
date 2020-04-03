@@ -32,10 +32,16 @@ if __name__ == "__main__":
             'y': [18, 6, 6, 18],
             'busd': [18, 6, 6, 18]
     }
+    virtual_prices = []
+    pools = ['compound', 'usdt', 'y', 'busd']
     while True:
         block = get_block(b)
         if not block:
             break
+
+        virtual_prices.append(
+            [block[pools[0]]['timestamp']] +
+            [block[pool]['virtual_price'] / 1e18 if pool in block else 0 for pool in pools])
 
         for pool in block:
             if pool not in summarized_data:
@@ -75,3 +81,7 @@ if __name__ == "__main__":
             data = list(summarized_data[pool][t].values())[-1000:]
             with open(f'json/{pool}-{t}m.json', 'w') as f:
                 json.dump(data, f)
+    with open('json/virtual-prices.json', 'w') as f:
+        json.dump({
+            'pools': pools,
+            'virtual_prices': virtual_prices}, f)
