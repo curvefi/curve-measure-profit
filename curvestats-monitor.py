@@ -48,8 +48,7 @@ if __name__ == '__main__':
     from web3.auto.infura import w3
     init_pools()
 
-    db = lmdb.open(DB_NAME)
-    db.set_mapsize(2 ** 29)
+    db = lmdb.open(DB_NAME, map_size=(2 ** 32))
 
     start_block = 9554041
     # start_block = w3.eth.getBlock('latest')['number'] - 100  # XXX pull from DB
