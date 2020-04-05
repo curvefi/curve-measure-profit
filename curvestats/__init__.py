@@ -72,7 +72,7 @@ class Pool:
         return {
             'A': self.pool.A().call(**kw),
             'fee': self.pool.fee().call(**kw),
-            'admin_fee': self.pool.fee().call(**kw),
+            'admin_fee': self.pool.admin_fee().call(**kw),
             'supply': self.token.totalSupply().call(**kw),
             'virtual_price': is_deposited and self.pool.get_virtual_price().call(**kw),
             'timestamp': timestamp,

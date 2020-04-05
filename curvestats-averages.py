@@ -9,7 +9,7 @@ TICKS = [1, 5, 10, 30]  # min
 
 summarized_data = {}
 db = lmdb.open(DB_NAME)
-db.set_mapsize(2 ** 29)
+db.set_mapsize(2 ** 32)
 
 
 def int2uid(value):
