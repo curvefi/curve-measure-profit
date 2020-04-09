@@ -70,7 +70,7 @@ if __name__ == '__main__':
     db = lmdb.open(DB_NAME, map_size=(2 ** 32))
 
     # start_block = 9554041
-    start_block = w3.eth.getBlock('latest')['number'] - 1000
+    start_block = w3.eth.getBlock('latest')['number'] - 5000
     print('Monitor started')
 
     # Initial data
@@ -95,7 +95,7 @@ if __name__ == '__main__':
         if current_block - start_block > MPOOL_SIZE:
             blocks = range(start_block, start_block + MPOOL_SIZE)
             with db.begin(write=True) as tx:
-                pools_to_fetch = pools_not_in_block(tx, blocks[-1])
+                pools_to_fetch = list(set(pools_not_in_block(tx, blocks[-1])) | set(pools_not_in_block(tx, blocks[0])))
                 if pools_to_fetch:
                     stats = {}
                     for p in pools_to_fetch:
