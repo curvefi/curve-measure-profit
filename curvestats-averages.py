@@ -5,7 +5,7 @@ import json
 
 DB_NAME = 'curvestats.lmdb'  # <- DB [block][pool#]{...}
 START_BLOCK = 9554041
-TICKS = [1, 5, 10, 30]  # min
+TICKS = [1, 5, 10, 30, 60 * 24]  # min
 
 summarized_data = {}
 db = lmdb.open(DB_NAME)
@@ -30,10 +30,11 @@ if __name__ == "__main__":
             'compound': [18, 6, 6],
             'usdt': [18, 6, 6],
             'y': [18, 6, 6, 18],
-            'busd': [18, 6, 6, 18]
+            'busd': [18, 6, 6, 18],
+            'susd': [18, 18]
     }
     virtual_prices = []
-    pools = ['compound', 'usdt', 'y', 'busd']
+    pools = ['compound', 'usdt', 'y', 'busd', 'susd']
     while True:
         block = get_block(b)
         if not block:
