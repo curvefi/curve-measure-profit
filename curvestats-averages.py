@@ -73,13 +73,18 @@ if __name__ == "__main__":
                     else:
                         obj['volume'][jpair] = tokens
                 del obj['trades']
+                for jpair in obj['prices']:
+                    prices = obj['prices'][jpair]
+                    # OHLC
+                    if prices:
+                        obj['prices'][jpair] = [prices[0], min(prices), max(prices), prices[-1]]
                 summarized_data[pool][tick][ts] = obj
 
         b += 1
 
     for pool in summarized_data:
         for t in summarized_data[pool]:
-            data = list(summarized_data[pool][t].values())[-1000:]
+            data = sorted(summarized_data[pool][t].values(), key=lambda x: x['timestamp'])[-1000:]
             with open(f'json/{pool}-{t}m.json', 'w') as f:
                 json.dump(data, f)
     with open('json/virtual-prices.json', 'w') as f:
