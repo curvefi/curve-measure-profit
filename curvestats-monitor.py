@@ -21,7 +21,7 @@ pools = {
         'busd': (YPool, ("0x79a8C46DeA5aDa233ABaFFD40F3A0A2B1e5A4F27", "0x3B3Ac5386837Dc563660FB6a0937DFAa5924333B"), 9567296),
         'susd': (SUSDPool, (
                     "0xeDf54bC005bc2Df0Cc6A675596e843D28b16A966", "0x2b645a6A426f22fB7954dC15E583e3737B8d1434",
-                    [None, "0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8"]
+                    [None, "0x45F783CCE6B7FF23B2ab2D70e416cdb7D6055f51"]
                 ), 9636558)
 }
 start_blocks = {}
@@ -69,8 +69,8 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 32))
 
-    start_block = 9554041
-    # start_block = w3.eth.getBlock('latest')['number'] - 100  # XXX pull from DB
+    # start_block = 9554041
+    start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
     # Initial data
@@ -111,7 +111,9 @@ if __name__ == '__main__':
                             block = json.loads(block)
                             v.update(block)
                         tx.put(int2uid(b), json.dumps(v).encode())
-                    print('...', start_block, pools_to_fetch)
+                    pools_fetched = [p for p in pools_to_fetch
+                                     if p in stats[blocks[-1]]]
+                    print('...', start_block, pools_fetched)
                 else:
                     print('... already in DB:', start_block)
             start_block += MPOOL_SIZE
