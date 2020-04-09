@@ -19,7 +19,10 @@ pools = {
         'usdt': (CompoundPool, ("0x52EA46506B9CC5Ef470C5bf89f17Dc28bB35D85C", "0x9fC689CCaDa600B6DF723D9E47D84d76664a1F23"), 9456294),
         'y': (YPool, ("0x45F783CCE6B7FF23B2ab2D70e416cdb7D6055f51", "0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8"), 9476469),
         'busd': (YPool, ("0x79a8C46DeA5aDa233ABaFFD40F3A0A2B1e5A4F27", "0x3B3Ac5386837Dc563660FB6a0937DFAa5924333B"), 9567296),
-        'susd': (SUSDPool, ("0xeDf54bC005bc2Df0Cc6A675596e843D28b16A966", "0x2b645a6A426f22fB7954dC15E583e3737B8d1434"), 9636558)
+        'susd': (SUSDPool, (
+                    "0xeDf54bC005bc2Df0Cc6A675596e843D28b16A966", "0x2b645a6A426f22fB7954dC15E583e3737B8d1434",
+                    [None, "0xdF5e0e81Dff6FAF3A7e52BA697820c5e32D806A8"]
+                ), 9636558)
 }
 start_blocks = {}
 
@@ -108,7 +111,7 @@ if __name__ == '__main__':
                             block = json.loads(block)
                             v.update(block)
                         tx.put(int2uid(b), json.dumps(v).encode())
-                    print('...', start_block)
+                    print('...', start_block, pools_to_fetch)
                 else:
                     print('... already in DB:', start_block)
             start_block += MPOOL_SIZE
