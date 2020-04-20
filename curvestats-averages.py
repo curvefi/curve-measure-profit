@@ -31,7 +31,7 @@ if __name__ == "__main__":
             'usdt': [18, 6, 6],
             'y': [18, 6, 6, 18],
             'busd': [18, 6, 6, 18],
-            'susd': [18, 18]
+            'susd': [18, 6, 6, 18]
     }
     virtual_prices = []
     pools = ['compound', 'usdt', 'y', 'busd', 'susd']
