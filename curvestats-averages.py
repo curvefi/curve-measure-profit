@@ -82,6 +82,29 @@ if __name__ == "__main__":
 
         b += 1
 
+    last_time, *p_last = virtual_prices[-1]
+    first_time, *p_first = virtual_prices[0]
+
+    day_ix = [(abs(vp[0] - (last_time - 86400)), tuple(vp)) for i, vp in enumerate(virtual_prices)]
+    week_ix = [(abs(vp[0] - (last_time - 7 * 86400)), tuple(vp)) for i, vp in enumerate(virtual_prices)]
+    month_ix = [(abs(vp[0] - (last_time - 30 * 86400)), tuple(vp)) for i, vp in enumerate(virtual_prices)]
+
+    vps = {'day': min(day_ix)[1],
+           'week': min(week_ix)[1],
+           'month': min(month_ix)[1]}
+
+    profits = {
+        interval: [
+            {pool: ((last / v) ** (86400 / (last_time - vp[0]))) ** 365 - 1
+             if v > 0 else 0}
+            for pool, v, last in zip(pools, vp[1:], p_last)]
+        for interval, vp in vps.items()
+    }
+    profits['total'] = {}
+    for i, pool in enumerate(pools):
+        t, v = [(vp[0], vp[i + 1]) for vp in virtual_prices if vp[i + 1] > 0][0]
+        profits['total'][pool] = ((p_last[i] / v) ** (86400 / (last_time - t))) ** 365 - 1
+
     for pool in summarized_data:
         for t in summarized_data[pool]:
             data = sorted(summarized_data[pool][t].values(), key=lambda x: x['timestamp'])[-1000:]
@@ -91,3 +114,5 @@ if __name__ == "__main__":
         json.dump({
             'pools': pools,
             'virtual_prices': virtual_prices}, f)
+    with open('json/apys.json', 'w') as f:
+        json.dump(profits, f)
