@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
+from collections import defaultdict
+from time import time
 import lmdb
 import json
 
 DB_NAME = 'curvestats.lmdb'  # <- DB [block][pool#]{...}
 START_BLOCK = 9554041
 TICKS = [1, 5, 10, 30, 60 * 24]  # min
+day_ago = time() - 86400
 
 summarized_data = {}
 db = lmdb.open(DB_NAME)
@@ -27,13 +30,14 @@ def get_block(b):
 if __name__ == "__main__":
     b = START_BLOCK
     decimals = {
-            'compound': [18, 6, 6],
+            'compound': [18, 6],
             'usdt': [18, 6, 6],
             'y': [18, 6, 6, 18],
             'busd': [18, 6, 6, 18],
             'susd': [18, 6, 6, 18]
     }
     virtual_prices = []
+    daily_volumes = defaultdict(float)
     pools = ['compound', 'usdt', 'y', 'busd', 'susd']
     while True:
         block = get_block(b)
@@ -63,6 +67,8 @@ if __name__ == "__main__":
                     jpair = '{}-{}'.format(*pair)
                     t0 = tokens[0] * 10 ** (18 - decimals[pool][pair[0]])
                     t1 = tokens[1] * 10 ** (18 - decimals[pool][pair[1]])
+                    if tick == 5 and ts > day_ago:
+                        daily_volumes[pool] += (t0 + t1) / (2 * 1e18)
                     if t1 > 0:
                         price = t1 / t0
                         if jpair not in obj['prices']:
@@ -115,4 +121,4 @@ if __name__ == "__main__":
             'pools': pools,
             'virtual_prices': virtual_prices}, f)
     with open('json/apys.json', 'w') as f:
-        json.dump(profits, f)
+        json.dump({'apy': profits, 'volume': daily_volumes}, f)
