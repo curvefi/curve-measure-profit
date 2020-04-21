@@ -100,10 +100,10 @@ if __name__ == "__main__":
            'month': min(month_ix)[1]}
 
     profits = {
-        interval: [
-            {pool: ((last / v) ** (86400 / (last_time - vp[0]))) ** 365 - 1
-             if v > 0 else 0}
-            for pool, v, last in zip(pools, vp[1:], p_last)]
+        interval: {
+            pool: ((last / v) ** (86400 / (last_time - vp[0]))) ** 365 - 1
+            if v > 0 else 0
+            for pool, v, last in zip(pools, vp[1:], p_last)}
         for interval, vp in vps.items()
     }
     profits['total'] = {}
