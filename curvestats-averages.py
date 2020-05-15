@@ -6,8 +6,8 @@ import lmdb
 import json
 
 DB_NAME = 'curvestats.lmdb'  # <- DB [block][pool#]{...}
-START_BLOCK = 9554041
-TICKS = [1, 5, 10, 30, 60 * 24]  # min
+START_BLOCK = 9456294
+TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
 summarized_data = {}
@@ -34,18 +34,27 @@ if __name__ == "__main__":
             'usdt': [18, 6, 6],
             'y': [18, 6, 6, 18],
             'busd': [18, 6, 6, 18],
-            'susd': [18, 6, 6, 18]
+            'susd': [18, 6, 6, 18],
+            'pax': [18, 6, 6, 18]
     }
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['compound', 'usdt', 'y', 'busd', 'susd']
+    pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax']
+    ctr = 0
     while True:
         block = get_block(b)
         if not block:
-            break
+            ctr += 1
+            b += 1
+            if ctr > 100:
+                break
+            else:
+                continue
+        else:
+            ctr = 0
 
         virtual_prices.append(
-            [block[pools[0]]['timestamp']] +
+            [block[pools[1]]['timestamp']] +
             [block[pool]['virtual_price'] / 1e18 if pool in block else 0 for pool in pools])
 
         for pool in block:
