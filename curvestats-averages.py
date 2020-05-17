@@ -80,7 +80,7 @@ if __name__ == "__main__":
                     t1 = tokens[1] * 10 ** (18 - decimals[pool][pair[1]])
                     if tick == 5 and ts > day_ago:
                         daily_volumes[pool] += (t0 + t1) / (2 * 1e18)
-                    if t1 > 0:
+                    if t1 > 0 and t0 > 0:
                         price = t1 / t0
                         if jpair not in obj['prices']:
                             obj['prices'][jpair] = []
