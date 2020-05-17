@@ -10,7 +10,7 @@ from functools import partial
 
 from curvestats.compound import CompoundPool
 from curvestats.y import YPool
-from curvestats.susd import SUSDPool
+from curvestats.btc import BtcPool
 
 MPOOL_SIZE = 40
 
@@ -21,6 +21,8 @@ pools = {
         'busd': (YPool, ("0x79a8C46DeA5aDa233ABaFFD40F3A0A2B1e5A4F27", "0x3B3Ac5386837Dc563660FB6a0937DFAa5924333B"), 9567296),
         'susd': (CompoundPool, ('0xA5407eAE9Ba41422680e2e00537571bcC53efBfD', '0xC25a3A3b969415c80451098fa907EC722572917F'), 9906599),
         'pax': (YPool, ("0x06364f10B501e868329afBc005b3492902d6C763", "0xD905e2eaeBe188fc92179b6350807D8bd91Db0D8"), 10041041),
+        'ren': (BtcPool, ("0x8474c1236F0Bc23830A23a41aBB81B2764bA9f4F", "0x7771F704490F9C0C3B06aFe8960dBB6c58CBC812"), 10068306),
+        'tbtc': (BtcPool, ("0x9726e9314eF1b96E45f40056bEd61A088897313E", "0x1f2a662FB513441f06b8dB91ebD9a1466462b275"), 10074720),
 }
 start_blocks = {}
 
@@ -67,7 +69,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 32))
 
-    start_block = 10040000
+    start_block = 10068100
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
