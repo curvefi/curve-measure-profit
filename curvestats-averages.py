@@ -35,11 +35,13 @@ if __name__ == "__main__":
             'y': [18, 6, 6, 18],
             'busd': [18, 6, 6, 18],
             'susd': [18, 6, 6, 18],
-            'pax': [18, 6, 6, 18]
+            'pax': [18, 6, 6, 18],
+            'ren': [8, 8],
+            'tbtc': [18, 8, 18]
     }
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax']
+    pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax', 'ren', 'tbtc']
     ctr = 0
     while True:
         block = get_block(b)
