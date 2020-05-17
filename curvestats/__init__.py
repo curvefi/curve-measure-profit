@@ -24,11 +24,14 @@ class Pool:
         for i in range(10):
             try:
                 self.pool.balances(i).call()
-                uc = self.pool.underlying_coins(i).call()
-                uc = self.w3.eth.contract(abi=TOKEN_ABI, address=uc).functions
-                self.underlying_coins.append(uc)
                 c = self.pool.coins(i).call()
                 self.coins.append(c)  # just address
+                try:
+                    uc = self.pool.underlying_coins(i).call()
+                except BadFunctionCallOutput:
+                    uc = c
+                uc = self.w3.eth.contract(abi=TOKEN_ABI, address=uc).functions
+                self.underlying_coins.append(uc)
                 self.decimals.append(uc.decimals().call())
                 self.N += 1
             except BadFunctionCallOutput:
