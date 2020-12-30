@@ -10,9 +10,13 @@ from functools import partial
 
 from curvestats.compound import CompoundPool
 from curvestats.y import YPool
-from curvestats.btc import BtcPool
+from curvestats.btc import BtcPool, NewBtcPool
+from curvestats.newpool import NewPool
+from curvestats.icy import IcyPool
+from curvestats.meta import MetaPool
+from curvestats.idle import IDLEPool
 
-MPOOL_SIZE = 40
+MPOOL_SIZE = 20
 
 pools = {
         'compound': (CompoundPool, ("0xA2B47E3D5c44877cca798226B7B8118F9BFb7A56", "0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2"), 9554041),
@@ -21,8 +25,27 @@ pools = {
         'busd': (YPool, ("0x79a8C46DeA5aDa233ABaFFD40F3A0A2B1e5A4F27", "0x3B3Ac5386837Dc563660FB6a0937DFAa5924333B"), 9567296),
         'susd': (CompoundPool, ('0xA5407eAE9Ba41422680e2e00537571bcC53efBfD', '0xC25a3A3b969415c80451098fa907EC722572917F'), 9906599),
         'pax': (YPool, ("0x06364f10B501e868329afBc005b3492902d6C763", "0xD905e2eaeBe188fc92179b6350807D8bd91Db0D8"), 10041041),
-        'ren': (BtcPool, ("0x8474c1236F0Bc23830A23a41aBB81B2764bA9f4F", "0x7771F704490F9C0C3B06aFe8960dBB6c58CBC812"), 10068306),
-        'tbtc': (BtcPool, ("0x9726e9314eF1b96E45f40056bEd61A088897313E", "0x1f2a662FB513441f06b8dB91ebD9a1466462b275"), 10074720),
+        'ren2': (BtcPool, ("0x93054188d876f558f4a66B2EF1d97d16eDf0895B", "0x49849C98ae39Fff122806C06791Fa73784FB3675"), 10151386),
+        'rens': (BtcPool, ("0x7fC77b5c7614E1533320Ea6DDc2Eb61fa00A9714", "0x075b1bb99792c9E1041bA13afEf80C91a1e70fB3"), 10276945),
+        'hbtc': (NewBtcPool, ("0x4CA9b3063Ec5866A4B82E437059D2C43d1be596F", "0xb19059ebb43466C323583928285a49f558E572Fd"), 10732330),
+        '3pool': (NewPool, ("0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7", "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490"), 10809482),
+        'gusd': (MetaPool, ("0x4f062658EaAF2C1ccf8C8e36D6824CDf41167956", "0xD2967f45c4f384DEEa880F807Be904762a3DeA07"), 11005605),
+        'husd': (MetaPool, ("0x3eF6A01A0f81D6046290f3e2A8c5b843e738E604", "0x5B5CFE992AdAC0C9D48E05854B2d91C73a003858"), 11010071),
+        'usdn': (MetaPool, ("0x0f9cb53Ebe405d49A0bbdBD291A65Ff571bC83e1", "0x4f3E8F405CF5aFC05D68142F3783bDfE13811522"), 11010515),
+        'usdk': (MetaPool, ("0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb", "0x97E2768e8E73511cA874545DC5Ff8067eB19B787"), 11010306),
+        'linkusd': (MetaPool, ("0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171", "0x6D65b498cb23deAba52db31c93Da9BFFb340FB8F"), 11011557),
+        'musd': (MetaPool, ("0x8474DdbE98F5aA3179B3B3F5942D724aFcdec9f6", "0x1AEf73d49Dedc4b1778d0706583995958Dc862e6"), 11011941),
+        'rsv': (MetaPool, ("0xC18cC39da8b11dA8c3541C598eE022258F9744da", "0xC2Ee6b0334C261ED60C72f6054450b61B8f18E35"), 11037532),
+        'tbtc': (MetaPool, ("0xC25099792E9349C7DD09759744ea681C7de2cb66", "0x64eda51d3Ad40D56b9dFc5554E06F94e1Dd786Fd"), 11095929),
+        'dusd': (MetaPool, ("0x8038C01A0390a8c547446a0b2c18fc9aEFEcc10c", "0x3a664Ab939FD8482048609f652f9a0B0677337B9"), 11187277),
+        'pbtc': (MetaPool, ("0x7F55DDe206dbAD629C080068923b36fe9D6bDBeF", "0xDE5331AC4B3630f94853Ff322B66407e0D6331E8"), 11421596),
+        'bbtc': (MetaPool, ("0x071c661B4DeefB59E2a3DdB20Db036821eeE8F4b", "0x410e3E86ef427e30B9235497143881f717d93c2A"), 11455023),
+        'obtc': (MetaPool, ("0xd81dA8D904b52208541Bade1bD6595D8a251F8dd", "0x2fE94ea3d5d4a175184081439753DE15AeF9d614"), 11459239),
+        'ust': (MetaPool, ("0x890f4e345B1dAED0367A877a1612f86A1f86985f", "0x94e131324b6054c0D789b190b2dAC504e4361b53"), 11466569),
+        'eurs': (NewPool, ("0x0Ce6a5fF5217e38315f87032CF90686C96627CAA", "0x194eBd173F6cDacE046C53eACcE9B953F28411d1"), 11466872),
+        'seth': (NewPool, ("0xc5424B857f758E906013F3555Dad202e4bdB4567", "0xA3D87FffcE63B53E0d54fAa1cc983B7eB0b74A9c"), 11491949),
+        'aave': (NewPool, ("0xDeBF20617708857ebe4F679508E7b7863a8A8EeE", "0xFd2a8fA60Abd58Efe3EeE34dd494cD491dC14900"), 11497107),
+        'idle': (IDLEPool, ("0x83f252f036761a1E3d10DACa8e16D7b21E3744D7", "0x09f4B84A87FC81FC84220fD7287b613B8A9D4c05"), 11503377),
 }
 start_blocks = {}
 
@@ -67,21 +90,24 @@ if __name__ == '__main__':
     from web3.auto.infura import w3
     init_pools()
 
-    db = lmdb.open(DB_NAME, map_size=(2 ** 32))
+    db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 10068100
+    start_block = 11503377
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
     # Initial data
     with db.begin(write=True) as tx:
-        if pools_not_in_block(tx, 0):
+        if pools_not_in_block(tx, 0) or True:  # XXX
             tx.put(int2uid(0), json.dumps(
                         {k: {
-                            'N': pool.N, 'decimals': pool.decimals,
+                            'N': pool.N,
+                            'underlying_N': pool.underlying_N if hasattr(pool, 'underlying_N') else pool.N,
+                            'decimals': pool.decimals,
+                            'underlying_decimals': pool.underlying_decimals if hasattr(pool, 'underlying_decimals') else pool.decimals,
                             'token': pool.token.address, 'pool': pool.pool.address,
                             'coins': [pool.coins[j].address for j in range(pool.N)],
-                            'underlying_coins': [pool.underlying_coins[j].address for j in range(pool.N)]}
+                            'underlying_coins': [pool.underlying_coins[j].address for j in range(getattr(pool, 'underlying_N', pool.N))]}
                          for k, pool in pools.items()}).encode())
 
     while True:

@@ -12,7 +12,7 @@ day_ago = time() - 86400
 
 summarized_data = {}
 db = lmdb.open(DB_NAME)
-db.set_mapsize(2 ** 32)
+db.set_mapsize(16 * 2 ** 32)
 
 
 def int2uid(value):
@@ -36,12 +36,34 @@ if __name__ == "__main__":
             'busd': [18, 6, 6, 18],
             'susd': [18, 6, 6, 18],
             'pax': [18, 6, 6, 18],
-            'ren': [8, 8],
-            'tbtc': [18, 8, 18]
+            'ren2': [8, 8],
+            'tbtc': [18, 8, 18],
+            'rens': [8, 8, 18],
+            'hbtc': [18, 8],
+            '3pool': [18, 6, 6],
+            'gusd': [2, 18],
+            'husd': [8, 18],
+            'usdn': [18, 18],
+            'usdk': [18, 18],
+            'linkusd': [18, 18],
+            'musd': [18, 18],
+            'rsv': [18, 18],
+            'tbtc': [18, 18],
+            'dusd': [18, 18],
+            'pbtc': [18, 18],
+            'bbtc': [8, 18],
+            'obtc': [18, 18],
+            'ust': [18, 18],
+            'eurs': [2, 18],
+            'seth': [18, 18],
+            'aave': [18, 6, 6],
+            'idle': [18, 6, 6],
     }
+    underlying_decimals = {'gusd': [2, 18, 6, 6], 'husd': [8, 18, 6, 6], 'usdn': [18, 18, 6, 6], 'usdk': [18, 18, 6, 6], 'linkusd': [18, 18, 6, 6], 'musd': [18, 18, 6, 6], 'rsv': [18, 18, 6, 6], 'tbtc': [18, 8, 8, 18], 'dusd': [18, 18, 6, 6], 'pbtc': [18, 8, 8, 18], 'bbtc': [8, 8, 8, 18], 'obtc': [18, 8, 8, 18], 'ust': [18, 18, 6, 6], 'seth': [18, 18], 'aave': [18, 6, 6], 'idle': [18, 6, 6]}
+    start_blocks = {'tbtc': 11095929}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax', 'ren', 'tbtc']
+    pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax', 'ren2', 'rens', 'hbtc', '3pool', 'gusd', 'husd', 'usdn', 'usdk', 'linkusd', 'musd', 'rsv', 'tbtc', 'dusd', 'pbtc', 'bbtc', 'obtc', 'ust', 'eurs', 'seth', 'aave', 'idle']
     ctr = 0
     while True:
         block = get_block(b)
@@ -63,6 +85,9 @@ if __name__ == "__main__":
             if pool not in summarized_data:
                 summarized_data[pool] = {}
 
+            if pool not in pools or start_blocks.get(pool, 0) >= b:
+                continue
+
             for tick in TICKS:
                 ts = block[pool]['timestamp'] // (tick * 60) * (tick * 60)
                 if tick not in summarized_data[pool]:
@@ -76,8 +101,12 @@ if __name__ == "__main__":
                     pair = sorted([(t['sold_id'], t['tokens_sold']), (t['bought_id'], t['tokens_bought'])])
                     pair, tokens = list(zip(*pair))  # (id1, id2), (vol1, vol2)
                     jpair = '{}-{}'.format(*pair)
-                    t0 = tokens[0] * 10 ** (18 - decimals[pool][pair[0]])
-                    t1 = tokens[1] * 10 ** (18 - decimals[pool][pair[1]])
+                    if t.get('underlying', False):
+                        t0 = tokens[0] * 10 ** (18 - underlying_decimals[pool][pair[0]])
+                        t1 = tokens[1] * 10 ** (18 - underlying_decimals[pool][pair[1]])
+                    else:
+                        t0 = tokens[0] * 10 ** (18 - decimals[pool][pair[0]])
+                        t1 = tokens[1] * 10 ** (18 - decimals[pool][pair[1]])
                     if tick == 5 and ts > day_ago:
                         daily_volumes[pool] += (t0 + t1) / (2 * 1e18)
                     if t1 > 0 and t0 > 0:
@@ -119,8 +148,11 @@ if __name__ == "__main__":
     }
     profits['total'] = {}
     for i, pool in enumerate(pools):
-        t, v = [(vp[0], vp[i + 1]) for vp in virtual_prices if vp[i + 1] > 0][0]
-        profits['total'][pool] = ((p_last[i] / v) ** (86400 / (last_time - t))) ** 365 - 1
+        try:
+            t, v = [(vp[0], vp[i + 1]) for vp in virtual_prices if vp[i + 1] > 0][0]
+            profits['total'][pool] = ((p_last[i] / v) ** (86400 / (last_time - t))) ** 365 - 1
+        except IndexError:
+            profits['total'][pool] = 0
 
     for pool in summarized_data:
         for t in summarized_data[pool]:
