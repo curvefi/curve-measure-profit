@@ -46,6 +46,7 @@ pools = {
         'seth': (NewPool, ("0xc5424B857f758E906013F3555Dad202e4bdB4567", "0xA3D87FffcE63B53E0d54fAa1cc983B7eB0b74A9c"), 11491949),
         'aave': (NewPool, ("0xDeBF20617708857ebe4F679508E7b7863a8A8EeE", "0xFd2a8fA60Abd58Efe3EeE34dd494cD491dC14900"), 11497107),
         'idle': (IDLEPool, ("0x83f252f036761a1E3d10DACa8e16D7b21E3744D7", "0x09f4B84A87FC81FC84220fD7287b613B8A9D4c05"), 11503377),
+        'steth': (NewPool, ("0xDC24316b9AE028F1497c275EB9192a3Ea0f67022", "0x06325440D014e39736583c165C2963BA99fAf14E"), 11592552),
 }
 start_blocks = {}
 
@@ -92,7 +93,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 11503377
+    start_block = 11592552
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
