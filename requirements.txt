@@ -1,2 +1,4 @@
 web3
 ipython
+lmdb
+retry

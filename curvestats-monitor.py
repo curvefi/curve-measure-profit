@@ -3,7 +3,6 @@
 import lmdb
 import json
 import time
-import config_infura  # noqa
 from time import sleep
 from multiprocessing import Pool
 from functools import partial
@@ -12,7 +11,6 @@ from curvestats.compound import CompoundPool
 from curvestats.y import YPool
 from curvestats.btc import BtcPool, NewBtcPool
 from curvestats.newpool import NewPool
-from curvestats.icy import IcyPool
 from curvestats.meta import MetaPool
 from curvestats.idle import IDLEPool
 
@@ -88,7 +86,8 @@ init_pools()
 
 
 if __name__ == '__main__':
-    from web3.auto.infura import w3
+    from curvestats.w3 import w3 as our_w3
+    w3 = our_w3()
     init_pools()
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))

@@ -14,8 +14,8 @@ ABI += [{"name":"base_pool","outputs":[{"type":"address","name":""}],"inputs":[]
 class MetaPool:
     def __init__(self, pool, token, w3=None, abi=ABI):
         if not w3:
-            from web3.auto.infura import w3 as infura_w3
-            self.w3 = infura_w3
+            from .w3 import w3 as our_w3
+            self.w3 = our_w3()
         self.pool_contract = self.w3.eth.contract(abi=abi, address=pool)
         self.pool = self.pool_contract.functions
         self.token_contract = self.w3.eth.contract(abi=TOKEN_ABI, address=token)
