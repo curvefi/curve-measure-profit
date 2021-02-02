@@ -12,9 +12,9 @@ from curvestats.compound import CompoundPool
 from curvestats.y import YPool
 from curvestats.btc import BtcPool, NewBtcPool
 from curvestats.newpool import NewPool
-from curvestats.icy import IcyPool
 from curvestats.meta import MetaPool
 from curvestats.idle import IDLEPool
+from curvestats.ankr import ANKRPool
 
 MPOOL_SIZE = 20
 
@@ -48,6 +48,7 @@ pools = {
         'idle': (IDLEPool, ("0x83f252f036761a1E3d10DACa8e16D7b21E3744D7", "0x09f4B84A87FC81FC84220fD7287b613B8A9D4c05"), 11503377),
         'steth': (NewPool, ("0xDC24316b9AE028F1497c275EB9192a3Ea0f67022", "0x06325440D014e39736583c165C2963BA99fAf14E"), 11592552),
         'saave': (NewPool, ("0xEB16Ae0052ed37f479f7fe63849198Df1765a733", "0x02d341CcB60fAaf662bC0554d13778015d1b285C"), 11772501),
+        'ankreth': (ANKRPool, ("0xA96A65c051bF88B4095Ee1f2451C2A9d43F53Ae2", "0xaA17A236F2bAdc98DDc0Cf999AbB47D47Fc0A6Cf"), 11774140),
 }
 start_blocks = {}
 
@@ -94,7 +95,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 11772501
+    start_block = 11774140
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
