@@ -70,7 +70,7 @@ if __name__ == "__main__":
             'dusd': [18, 18, 6, 6], 'pbtc': [18, 8, 8, 18], 'bbtc': [8, 8, 8, 18], 'obtc': [18, 8, 8, 18],
             'ust': [18, 18, 6, 6], 'seth': [18, 18], 'aave': [18, 6, 6], 'idle': [18, 6, 6], 'ankreth': [18, 18],
             'usdp': [18, 18, 6, 6]}
-    start_blocks = {'tbtc': 11095929}
+    start_blocks = {'tbtc': 11095929, 'usdp': 11876196}
     virtual_prices = []
     daily_volumes = defaultdict(float)
     pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax', 'ren2', 'rens', 'hbtc', '3pool', 'gusd', 'husd', 'usdn',
