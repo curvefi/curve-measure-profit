@@ -62,6 +62,7 @@ if __name__ == "__main__":
             'ankreth': [18, 18],
             'usdp': [18, 18],
             'ib': [18, 6, 6],
+            'link': [18, 18],
     }
     underlying_decimals = {
             'gusd': [2, 18, 6, 6], 'husd': [8, 18, 6, 6], 'usdn': [18, 18, 6, 6], 'usdk': [18, 18, 6, 6],
@@ -74,7 +75,7 @@ if __name__ == "__main__":
     daily_volumes = defaultdict(float)
     pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax', 'ren2', 'rens', 'hbtc', '3pool', 'gusd', 'husd', 'usdn',
              'usdk', 'linkusd', 'musd', 'rsv', 'tbtc', 'dusd', 'pbtc', 'bbtc', 'obtc', 'ust', 'eurs', 'seth', 'aave',
-             'idle', 'steth', 'saave', 'ankreth', 'usdp', 'ib']
+             'idle', 'steth', 'saave', 'ankreth', 'usdp', 'ib', 'link']
     ctr = 0
     while True:
         block = get_block(b)

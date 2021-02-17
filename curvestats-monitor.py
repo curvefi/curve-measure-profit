@@ -53,6 +53,7 @@ pools = {
         'ankreth': (ANKRPool, ("0xA96A65c051bF88B4095Ee1f2451C2A9d43F53Ae2", "0xaA17A236F2bAdc98DDc0Cf999AbB47D47Fc0A6Cf"), 11774140),
         'usdp': (MetaPoolU, ("0x9e732cF531b965Cd172968163BbF4E05b64600f8", "0x9e732cF531b965Cd172968163BbF4E05b64600f8"), 11812257),
         'ib': (YV2Pool, ("0x2dded6Da1BF5DBdF597C45fcFaa3194e53EcfeAF", "0x5282a4eF67D9C33135340fB3289cc1711c13638C"), 11831120),
+        'link': (NewPool, ("0xF178C0b5Bb7e7aBF4e12A4838C7b7c5bA2C623c0", "0xcee60cFa923170e4f8204AE08B4fA6A3F5656F3a"), 11875163),
 }
 start_blocks = {}
 
@@ -99,7 +100,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 11831120
+    start_block = 11875163
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
