@@ -5,8 +5,9 @@ from time import time
 import lmdb
 import json
 
-DB_NAME = 'curvestats.lmdb'  # <- DB [block][pool#]{...}
-START_BLOCK = 9456294
+DB_NAME = 'fantom.lmdb'  # <- DB [block][pool#]{...}
+DIR = 'json-ftm'
+START_BLOCK = 2320910
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
@@ -30,41 +31,13 @@ def get_block(b):
 if __name__ == "__main__":
     b = START_BLOCK
     decimals = {
-            'compound': [18, 6],
-            'usdt': [18, 6, 6],
-            'y': [18, 6, 6, 18],
-            'busd': [18, 6, 6, 18],
-            'susd': [18, 6, 6, 18],
-            'pax': [18, 6, 6, 18],
-            'ren2': [8, 8],
-            'tbtc': [18, 8, 18],
-            'rens': [8, 8, 18],
-            'hbtc': [18, 8],
-            '3pool': [18, 6, 6],
-            'gusd': [2, 18],
-            'husd': [8, 18],
-            'usdn': [18, 18],
-            'usdk': [18, 18],
-            'linkusd': [18, 18],
-            'musd': [18, 18],
-            'rsv': [18, 18],
-            'tbtc': [18, 18],
-            'dusd': [18, 18],
-            'pbtc': [18, 18],
-            'bbtc': [8, 18],
-            'obtc': [18, 18],
-            'ust': [18, 18],
-            'eurs': [2, 18],
-            'seth': [18, 18],
-            'aave': [18, 6, 6],
-            'idle': [18, 6, 6],
-            'steth': [18, 18],
+            '2pool': [18, 6],
     }
-    underlying_decimals = {'gusd': [2, 18, 6, 6], 'husd': [8, 18, 6, 6], 'usdn': [18, 18, 6, 6], 'usdk': [18, 18, 6, 6], 'linkusd': [18, 18, 6, 6], 'musd': [18, 18, 6, 6], 'rsv': [18, 18, 6, 6], 'tbtc': [18, 8, 8, 18], 'dusd': [18, 18, 6, 6], 'pbtc': [18, 8, 8, 18], 'bbtc': [8, 8, 8, 18], 'obtc': [18, 8, 8, 18], 'ust': [18, 18, 6, 6], 'seth': [18, 18], 'aave': [18, 6, 6], 'idle': [18, 6, 6]}
-    start_blocks = {'tbtc': 11095929}
+    underlying_decimals = {}
+    start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax', 'ren2', 'rens', 'hbtc', '3pool', 'gusd', 'husd', 'usdn', 'usdk', 'linkusd', 'musd', 'rsv', 'tbtc', 'dusd', 'pbtc', 'bbtc', 'obtc', 'ust', 'eurs', 'seth', 'aave', 'idle', 'steth']
+    pools = ['2pool']
     ctr = 0
     while True:
         block = get_block(b)
@@ -79,8 +52,8 @@ if __name__ == "__main__":
             ctr = 0
 
         virtual_prices.append(
-            [block[pools[1]]['timestamp']] +
-            [block[pool]['virtual_price'] / 1e18 if pool in block else 0 for pool in pools])
+                [block[pools[0]]['timestamp']] +
+                [block[pool]['virtual_price'] / 1e18 if pool in block else 0 for pool in pools])
 
         for pool in block:
             if pool not in summarized_data:
@@ -158,11 +131,11 @@ if __name__ == "__main__":
     for pool in summarized_data:
         for t in summarized_data[pool]:
             data = sorted(summarized_data[pool][t].values(), key=lambda x: x['timestamp'])[-1000:]
-            with open(f'json/{pool}-{t}m.json', 'w') as f:
+            with open(f'{DIR}/{pool}-{t}m.json', 'w') as f:
                 json.dump(data, f)
-    with open('json/virtual-prices.json', 'w') as f:
+    with open(f'{DIR}/virtual-prices.json', 'w') as f:
         json.dump({
             'pools': pools,
             'virtual_prices': virtual_prices}, f)
-    with open('json/apys.json', 'w') as f:
+    with open(f'{DIR}/apys.json', 'w') as f:
         json.dump({'apy': profits, 'volume': daily_volumes}, f)
