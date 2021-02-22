@@ -9,7 +9,7 @@ from functools import partial
 
 from curvestats.newpool import NewPool
 
-MPOOL_SIZE = 20
+MPOOL_SIZE = 100
 
 pools = {
         '2pool': (NewPool, ("0x27E611FD27b276ACbd5Ffd632E5eAEBEC9761E40", "0x27E611FD27b276ACbd5Ffd632E5eAEBEC9761E40"), 2320910),
