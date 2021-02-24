@@ -51,9 +51,9 @@ pools = {
         'steth': (NewPool, ("0xDC24316b9AE028F1497c275EB9192a3Ea0f67022", "0x06325440D014e39736583c165C2963BA99fAf14E"), 11592552),
         'saave': (NewPool, ("0xEB16Ae0052ed37f479f7fe63849198Df1765a733", "0x02d341CcB60fAaf662bC0554d13778015d1b285C"), 11772501),
         'ankreth': (ANKRPool, ("0xA96A65c051bF88B4095Ee1f2451C2A9d43F53Ae2", "0xaA17A236F2bAdc98DDc0Cf999AbB47D47Fc0A6Cf"), 11774140),
-        'usdp': (NewPool, ("0x36965b1A6b97c1b33416e5D53Fb5621Ade1F1E80", "0x86A91b50af95fF1D9D53CA1E4963ef06D8b31369"), 11876196),
         'ib': (YV2Pool, ("0x2dded6Da1BF5DBdF597C45fcFaa3194e53EcfeAF", "0x5282a4eF67D9C33135340fB3289cc1711c13638C"), 11831120),
         'link': (NewPool, ("0xF178C0b5Bb7e7aBF4e12A4838C7b7c5bA2C623c0", "0xcee60cFa923170e4f8204AE08B4fA6A3F5656F3a"), 11875216),
+        'usdp': (MetaPool, ("0x42d7025938bEc20B69cBae5A77421082407f053A", "0x7Eb40E450b9655f4B3cC4259BCC731c63ff55ae6"), 11922058),
 }
 start_blocks = {}
 
@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 11876196
+    start_block = 11922058
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
