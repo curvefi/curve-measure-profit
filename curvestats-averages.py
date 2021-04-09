@@ -32,12 +32,14 @@ if __name__ == "__main__":
     b = START_BLOCK
     decimals = {
             '2pool': [18, 6],
+            'fusdt': [6, 18],
     }
-    underlying_decimals = {}
+    underlying_decimals = {'fusdt': [6, 18, 6]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['2pool']
+    pools = ['2pool', 'fusdt']
+    andred_pools = set(['fusdt'])
     ctr = 0
     while True:
         block = get_block(b)
@@ -76,8 +78,14 @@ if __name__ == "__main__":
                     pair, tokens = list(zip(*pair))  # (id1, id2), (vol1, vol2)
                     jpair = '{}-{}'.format(*pair)
                     if t.get('underlying', False):
-                        t0 = tokens[0] * 10 ** (18 - underlying_decimals[pool][pair[0]])
-                        t1 = tokens[1] * 10 ** (18 - underlying_decimals[pool][pair[1]])
+                        if pool in andred_pools and pair[0] >= 1 and t['sold_id'] == pair[0]:
+                            t0 = tokens[0] * block[pool]['virtual_price'] // 10**18
+                        else:
+                            t0 = tokens[0] * 10 ** (18 - underlying_decimals[pool][pair[0]])
+                        if pool in andred_pools and pair[1] >= 1 and t['sold_id'] == pair[1]:
+                            t1 = tokens[1] * block[pool]['virtual_price'] // 10**18
+                        else:
+                            t1 = tokens[1] * 10 ** (18 - underlying_decimals[pool][pair[1]])
                     else:
                         t0 = tokens[0] * 10 ** (18 - decimals[pool][pair[0]])
                         t1 = tokens[1] * 10 ** (18 - decimals[pool][pair[1]])
