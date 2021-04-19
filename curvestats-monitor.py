@@ -8,17 +8,15 @@ from multiprocessing import Pool
 from functools import partial
 
 from curvestats.newpool import NewPool
-from curvestats.meta_andre import MetaPool
 
-MPOOL_SIZE = 100
+MPOOL_SIZE = 25
 
 pools = {
-        '2pool': (NewPool, ("0x27E611FD27b276ACbd5Ffd632E5eAEBEC9761E40", "0x27E611FD27b276ACbd5Ffd632E5eAEBEC9761E40"), 2320910),
-        'fusdt': (MetaPool, ("0x92D5ebF3593a92888C25C0AbEF126583d4b5312E", "0x92D5ebF3593a92888C25C0AbEF126583d4b5312E", "0x27E611FD27b276ACbd5Ffd632E5eAEBEC9761E40"), 3182906),
+        'aave': (NewPool, ("0x7f90122BF0700F9E7e1F688fe926940E8839F353", "0x1337BedC9D22ecbe766dF105c9623922A27963EC"), 13447150),
 }
 start_blocks = {}
 
-DB_NAME = 'fantom.lmdb'  # <- DB [block][pool#]{...}
+DB_NAME = 'polygon.lmdb'  # <- DB [block][pool#]{...}
 
 
 def init_pools():
@@ -62,7 +60,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 3264448
+    start_block = 13473025
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 

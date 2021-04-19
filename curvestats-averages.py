@@ -5,9 +5,9 @@ from time import time
 import lmdb
 import json
 
-DB_NAME = 'fantom.lmdb'  # <- DB [block][pool#]{...}
-DIR = 'json-ftm'
-START_BLOCK = 2320910
+DB_NAME = 'polygon.lmdb'  # <- DB [block][pool#]{...}
+DIR = 'json-polygon'
+START_BLOCK = 13447150
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
@@ -31,15 +31,14 @@ def get_block(b):
 if __name__ == "__main__":
     b = START_BLOCK
     decimals = {
-            '2pool': [18, 6],
-            'fusdt': [6, 18],
+            'aave': [18, 6, 6],
     }
-    underlying_decimals = {'fusdt': [6, 18, 6]}
+    underlying_decimals = {'aave': [18, 6, 6]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['2pool', 'fusdt']
-    andred_pools = set(['fusdt'])
+    pools = ['aave']
+    andred_pools = set()
     ctr = 0
     while True:
         block = get_block(b)

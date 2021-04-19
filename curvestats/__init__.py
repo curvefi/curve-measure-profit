@@ -79,12 +79,18 @@ class Pool:
                 'bought_id': ev['bought_id'],
                 'tokens_bought': ev['tokens_bought'] * rates[ev['bought_id']] // 1e18})
 
+        try:
+            vprice = is_deposited and self.pool.get_virtual_price().call(**kw)
+        except Exception as e:
+            print(block, e)
+            vprice = 0
+
         return {
             'A': self.pool.A().call(**kw),
             'fee': self.pool.fee().call(**kw),
             'admin_fee': self.pool.admin_fee().call(**kw),
             'supply': self.token.totalSupply().call(**kw),
-            'virtual_price': is_deposited and self.pool.get_virtual_price().call(**kw),
+            'virtual_price': vprice,
             'timestamp': timestamp,
             'balances': balances,
             'rates': rates,
