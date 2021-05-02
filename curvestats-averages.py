@@ -53,6 +53,10 @@ if __name__ == "__main__":
         else:
             ctr = 0
 
+        if 'timestamp' not in block[pools[0]]:
+            b += 1
+            continue
+
         virtual_prices.append(
                 [block[pools[0]]['timestamp']] +
                 [block[pool]['virtual_price'] / 1e18 if pool in block else 0 for pool in pools])
