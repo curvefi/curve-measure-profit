@@ -29,8 +29,15 @@ def init_pools():
 
 
 def fetch_stats(block, i='compound'):
-    init_pools()
-    return pools[i].fetch_stats(block)
+    try:
+        init_pools()
+        return pools[i].fetch_stats(block)
+    except ValueError as e:
+        if 'missing trie node' in str(e):
+            print('missing trie node for', block)
+            return {}
+        else:
+            raise
 
 
 def int2uid(value):
@@ -62,7 +69,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 3264448
+    start_block = 4563939
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
