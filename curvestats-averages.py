@@ -42,7 +42,7 @@ if __name__ == "__main__":
     ctr = 0
     while True:
         block = get_block(b)
-        if not block:
+        if not block or 'timestamp' not in block[pools[0]]:
             ctr += 1
             b += 1
             if ctr > 100:
