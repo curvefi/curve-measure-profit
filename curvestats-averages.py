@@ -45,10 +45,9 @@ if __name__ == "__main__":
         if not block or 'timestamp' not in block[pools[0]]:
             ctr += 1
             b += 1
-            if ctr > 100:
+            if not block and ctr > 100:
                 break
-            else:
-                continue
+            continue
         else:
             ctr = 0
 
