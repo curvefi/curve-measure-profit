@@ -12,8 +12,7 @@ TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
 summarized_data = {}
-db = lmdb.open(DB_NAME)
-db.set_mapsize(16 * 2 ** 32)
+db = lmdb.open(DB_NAME, map_size=16*2**32)
 
 
 def int2uid(value):
