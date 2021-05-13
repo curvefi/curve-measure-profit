@@ -7,7 +7,7 @@ import json
 
 DB_NAME = 'polygon.lmdb'  # <- DB [block][pool#]{...}
 DIR = 'json-polygon'
-START_BLOCK = 14213367
+START_BLOCK = 13479485
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
