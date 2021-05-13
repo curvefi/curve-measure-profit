@@ -8,11 +8,15 @@ from multiprocessing import Pool
 from functools import partial
 
 from curvestats.newpool import NewPool
+from curvestats.cryptometastable import Pool as CryptoPool
 
 MPOOL_SIZE = 25
 
 pools = {
         'aave': (NewPool, ("0x445FE580eF8d70FF569aB36e80c647af338db351", "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171"), 13479485),
+        'cryptofiat': (CryptoPool, ('0x4643A6600eae4851677A1f16d5e40Ef868c71717',
+                                    '0x939986418baFb4E2d82A76E320767Ff02d250203',
+                                    '0x445FE580eF8d70FF569aB36e80c647af338db351'), 14213367)
 }
 start_blocks = {}
 
@@ -67,7 +71,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 14318352
+    start_block = 14213367
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 

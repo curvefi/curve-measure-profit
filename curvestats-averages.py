@@ -7,7 +7,7 @@ import json
 
 DB_NAME = 'polygon.lmdb'  # <- DB [block][pool#]{...}
 DIR = 'json-polygon'
-START_BLOCK = 13479485
+START_BLOCK = 14213367
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
@@ -31,12 +31,13 @@ if __name__ == "__main__":
     b = START_BLOCK
     decimals = {
             'aave': [18, 6, 6],
+            'cryptofiat': [18, 8, 18],
     }
-    underlying_decimals = {'aave': [18, 6, 6]}
+    underlying_decimals = {'aave': [18, 6, 6], 'cryptofiat': [18, 6, 6, 8, 18]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['aave']
+    pools = ['aave', 'cryptofiat']
     andred_pools = set()
     ctr = 0
     while True:
