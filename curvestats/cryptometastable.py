@@ -15,7 +15,7 @@ def load_abi(fname):
 
 
 class Pool:
-    # @retry(Exception, delay=5, tries=5, backoff=2)
+    @retry(Exception, delay=5, tries=5, backoff=2)
     def __init__(self, pool, token, stable_pool, w3=None):
         if not w3:
             from .w3 import w3 as our_w3
@@ -63,7 +63,7 @@ class Pool:
                 else:
                     break
 
-    # @retry(Exception, delay=5, tries=5, backoff=2)
+    @retry(Exception, delay=5, tries=5, backoff=2)
     def fetch_stats(self, block='latest'):
         full_block = self.w3.eth.getBlock(block)
         block = full_block['number']
