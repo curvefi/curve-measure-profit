@@ -38,7 +38,7 @@ if __name__ == "__main__":
     virtual_prices = []
     daily_volumes = defaultdict(float)
     pools = ['aave', 'cryptofiat']
-    andred_pools = set()
+    pool_names = {'aave': 'aave', 'cryptofiat': 'tricrypto'}
     ctr = 0
     while True:
         block = get_block(b)
@@ -76,19 +76,13 @@ if __name__ == "__main__":
                     pair, tokens = list(zip(*pair))  # (id1, id2), (vol1, vol2)
                     jpair = '{}-{}'.format(*pair)
                     if t.get('underlying', False):
-                        if pool in andred_pools and pair[0] >= 1 and t['sold_id'] == pair[0]:
-                            t0 = tokens[0] * block[pool]['virtual_price'] // 10**18
-                        else:
-                            t0 = tokens[0] * 10 ** (18 - underlying_decimals[pool][pair[0]])
-                        if pool in andred_pools and pair[1] >= 1 and t['sold_id'] == pair[1]:
-                            t1 = tokens[1] * block[pool]['virtual_price'] // 10**18
-                        else:
-                            t1 = tokens[1] * 10 ** (18 - underlying_decimals[pool][pair[1]])
+                        t0 = tokens[0] * 10 ** (18 - underlying_decimals[pool][pair[0]])
+                        t1 = tokens[1] * 10 ** (18 - underlying_decimals[pool][pair[1]])
                     else:
                         t0 = tokens[0] * 10 ** (18 - decimals[pool][pair[0]])
                         t1 = tokens[1] * 10 ** (18 - decimals[pool][pair[1]])
                     if tick == 5 and ts > day_ago:
-                        daily_volumes[pool] += (t0 + t1) / (2 * 1e18)
+                        daily_volumes[pool_names[pool]] += (t0 + t1) / (2 * 1e18)
                     if t1 > 0 and t0 > 0:
                         price = t1 / t0
                         if jpair not in obj['prices']:
@@ -121,7 +115,7 @@ if __name__ == "__main__":
 
     profits = {
         interval: {
-            pool: ((last / v) ** (86400 / (last_time - vp[0]))) ** 365 - 1
+            pool_names[pool]: ((last / v) ** (86400 / (last_time - vp[0]))) ** 365 - 1
             if v > 0 else 0
             for pool, v, last in zip(pools, vp[1:], p_last)}
         for interval, vp in vps.items()
@@ -130,18 +124,19 @@ if __name__ == "__main__":
     for i, pool in enumerate(pools):
         try:
             t, v = [(vp[0], vp[i + 1]) for vp in virtual_prices if vp[i + 1] > 0][0]
-            profits['total'][pool] = ((p_last[i] / v) ** (86400 / (last_time - t))) ** 365 - 1
+            profits['total'][pool_names[pool]] = ((p_last[i] / v) ** (86400 / (last_time - t))) ** 365 - 1
         except IndexError:
-            profits['total'][pool] = 0
+            profits['total'][pool_names[pool]] = 0
 
     for pool in summarized_data:
         for t in summarized_data[pool]:
             data = sorted(summarized_data[pool][t].values(), key=lambda x: x['timestamp'])[-1000:]
-            with open(f'{DIR}/{pool}-{t}m.json', 'w') as f:
+            pool_name = pool_names[pool]
+            with open(f'{DIR}/{pool_name}-{t}m.json', 'w') as f:
                 json.dump(data, f)
     with open(f'{DIR}/virtual-prices.json', 'w') as f:
         json.dump({
-            'pools': pools,
+            'pools': [pool_names[p] for p in pools],
             'virtual_prices': virtual_prices}, f)
     with open(f'{DIR}/apys.json', 'w') as f:
         json.dump({'apy': profits, 'volume': daily_volumes}, f)
