@@ -58,6 +58,7 @@ pools = {
         'frax': (MetaPoolU, ("0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B", "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B"), 11968731),
         'lusd': (MetaPoolU, ("0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA", "0xEd279fDD11cA84bEef15AF5D39BB4d4bEE23F0cA"), 12184844),
         'busdv2': (MetaPoolU, ("0x4807862AA8b2bF68830e4C8dc86D0e9A998e085a", "0x4807862AA8b2bF68830e4C8dc86D0e9A998e085a"), 12237710),
+        'alusd': (MetaPoolU, ("0x43b4FdFD4Ff969587185cDB6f0BD875c5Fc83f8c", "0x43b4FdFD4Ff969587185cDB6f0BD875c5Fc83f8c"), 11955334),
 }
 start_blocks = {}
 
@@ -104,7 +105,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 12237710
+    start_block = 11955334
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
