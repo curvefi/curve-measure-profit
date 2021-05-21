@@ -71,7 +71,8 @@ class Pool:
         kw = {'block_identifier': block}
         vprice = self.stableswap.get_virtual_price().call(**kw)
         price_oracle = [self.pool.price_oracle(i).call(**kw) for i in range(self.N-1)]
-        rates = [vprice/1e18] + [vprice*p / 1e36 for p in price_oracle]
+        rates = [vprice] * self.N
+        prices = [1] + [p / 1e18 for p in price_oracle]
         balances = [self.pool.balances(i).call(**kw) for i in range(self.N)]
         is_deposited = True
         for b in balances:
@@ -104,8 +105,10 @@ class Pool:
             'price_scale': [self.pool.price_scale(i).call(**kw) for i in range(self.N-1)],
             'supply': self.token.totalSupply().call(**kw),
             'virtual_price': vprice,
+            'xcp_profit': self.pool.xcp_profit().call(**kw),
             'timestamp': timestamp,
             'balances': balances,
             'rates': rates,
+            'prices': prices,
             'trades': trades
         }
