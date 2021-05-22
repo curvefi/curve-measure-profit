@@ -82,8 +82,8 @@ if __name__ == "__main__":
                         t0 = tokens[0] * 10 ** (18 - decimals[pool][pair[0]])
                         t1 = tokens[1] * 10 ** (18 - decimals[pool][pair[1]])
                     if tick == 5 and ts > day_ago:
-                        if 'prices' in t:
-                            v = t['prices'][pair[0]] * t0 + t['prices'][pair[1]] * t1
+                        if 'crypto_prices' in obj:
+                            v = obj['crypto_prices'][pair[0]] * t0 + obj['crypto_prices'][pair[1]] * t1
                         else:
                             v = t0 + t1
                         daily_volumes[pool_names[pool]] += v / (2 * 1e18)

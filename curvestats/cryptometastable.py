@@ -71,8 +71,8 @@ class Pool:
         kw = {'block_identifier': block}
         vprice = self.stableswap.get_virtual_price().call(**kw)
         price_oracle = [self.pool.price_oracle(i).call(**kw) for i in range(self.N-1)]
-        rates = [vprice] * self.N
-        prices = [1] + [p / 1e18 for p in price_oracle]
+        rates = [vprice] + [10**18] * (self.N - 1)
+        prices = [1.0] + [p * vprice / 1e36 for p in price_oracle]
         balances = [self.pool.balances(i).call(**kw) for i in range(self.N)]
         is_deposited = True
         for b in balances:
@@ -84,9 +84,9 @@ class Pool:
             # Volumes assume everything in the same price
             trades.append({
                 'sold_id': ev['sold_id'],
-                'tokens_sold': int(ev['tokens_sold'] * rates[ev['sold_id']]),
+                'tokens_sold': ev['tokens_sold'] * rates[ev['sold_id']] // 10**18,
                 'bought_id': ev['bought_id'],
-                'tokens_bought': int(ev['tokens_bought'] * rates[ev['bought_id']])})
+                'tokens_bought': ev['tokens_bought'] * rates[ev['bought_id']] // 10**18})
 
         try:
             vprice = is_deposited and self.pool.get_virtual_price().call(**kw)
@@ -109,6 +109,6 @@ class Pool:
             'timestamp': timestamp,
             'balances': balances,
             'rates': rates,
-            'prices': prices,
+            'crypto_prices': prices,
             'trades': trades
         }
