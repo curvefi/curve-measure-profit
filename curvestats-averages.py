@@ -39,6 +39,7 @@ if __name__ == "__main__":
     daily_volumes = defaultdict(float)
     pools = ['aave', 'atricrypto']
     pool_names = {'aave': 'aave', 'atricrypto': 'atricrypto'}
+    meta = {'atricrypto': 'aave'}
     ctr = 0
     while True:
         block = get_block(b)
@@ -131,6 +132,11 @@ if __name__ == "__main__":
             profits['total'][pool_names[pool]] = ((p_last[i] / v) ** (86400 / (last_time - t))) ** 365 - 1
         except IndexError:
             profits['total'][pool_names[pool]] = 0
+
+    for pool in meta:
+        for k in profits:
+            if profits[k][pool] > 0:
+                profits[k][pool] += profits[k][meta[pool]] / len(decimals[pool])
 
     for pool in summarized_data:
         for t in summarized_data[pool]:
