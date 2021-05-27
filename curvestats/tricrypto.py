@@ -27,14 +27,9 @@ class Pool:
         self.token_contract = self.w3.eth.contract(abi=erc20, address=token)
         self.token = self.token_contract.functions
 
-        self.stableswap = self.w3.eth.contract(abi=load_abi("Stableswap"), address=stable_pool).functions
-
         self.N = 0
-        self.UN = 0
-        self.underlying_coins = []
         self.coins = []
         self.decimals = []
-        self.underlying_decimals = []
 
         for i in range(10):
             try:
@@ -43,20 +38,6 @@ class Pool:
                 self.coins.append(c)
                 self.decimals.append(int(c.decimals().call()))
                 self.N += 1
-                if i == 0:
-                    for j in range(10):
-                        try:
-                            addr = self.stableswap.coins(j).call()
-                        except (BadFunctionCallOutput, ValueError):
-                            break
-                        uc = self.w3.eth.contract(abi=erc20, address=addr).functions
-                        self.underlying_coins.append(uc)
-                        self.underlying_decimals.append(int(uc.decimals().call()))
-                        self.UN += 1
-                else:
-                    self.UN += 1
-                    self.underlying_coins.append(c)
-                    self.underlying_decimals.append(self.decimals[-1])
             except (BadFunctionCallOutput, ValueError):
                 if i == 0:
                     raise
@@ -69,10 +50,8 @@ class Pool:
         block = full_block['number']
         timestamp = full_block['timestamp']
         kw = {'block_identifier': block}
-        vprice = self.stableswap.get_virtual_price().call(**kw)
         price_oracle = [self.pool.price_oracle(i).call(**kw) for i in range(self.N-1)]
-        rates = [vprice] + [10**18] * (self.N - 1)
-        prices = [1.0] + [p * vprice / 1e36 for p in price_oracle]
+        prices = [1.0] + [p / 1e18 for p in price_oracle]
         balances = [self.pool.balances(i).call(**kw) for i in range(self.N)]
         is_deposited = True
         for b in balances:
@@ -84,9 +63,9 @@ class Pool:
             # Volumes assume everything in the same price
             trades.append({
                 'sold_id': ev['sold_id'],
-                'tokens_sold': ev['tokens_sold'] * rates[ev['sold_id']] // 10**18,
+                'tokens_sold': ev['tokens_sold'],
                 'bought_id': ev['bought_id'],
-                'tokens_bought': ev['tokens_bought'] * rates[ev['bought_id']] // 10**18})
+                'tokens_bought': ev['tokens_bought']})
 
         try:
             vprice = is_deposited and self.pool.get_virtual_price().call(**kw)
@@ -108,7 +87,7 @@ class Pool:
             'xcp_profit': self.pool.xcp_profit().call(**kw),
             'timestamp': timestamp,
             'balances': balances,
-            'rates': rates,
+            'rates': [10**18] * 3,
             'crypto_prices': prices,
             'trades': trades
         }
