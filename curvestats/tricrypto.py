@@ -16,7 +16,7 @@ def load_abi(fname):
 
 class Pool:
     @retry(Exception, delay=5, tries=5, backoff=2)
-    def __init__(self, pool, token, stable_pool, w3=None):
+    def __init__(self, pool, token, w3=None):
         if not w3:
             from .w3 import w3 as our_w3
             self.w3 = our_w3()
