@@ -7,7 +7,7 @@ import json
 
 DB_NAME = 'crypto.lmdb'  # <- DB [block][pool#]{...}
 DIR = 'json-crypto'
-START_BLOCK = 13479485
+START_BLOCK = 12521539
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
