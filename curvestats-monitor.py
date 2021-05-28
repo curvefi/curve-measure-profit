@@ -76,12 +76,9 @@ if __name__ == '__main__':
             tx.put(int2uid(0), json.dumps(
                         {k: {
                             'N': pool.N,
-                            'underlying_N': pool.underlying_N if hasattr(pool, 'underlying_N') else pool.N,
                             'decimals': pool.decimals,
-                            'underlying_decimals': pool.underlying_decimals if hasattr(pool, 'underlying_decimals') else pool.decimals,
                             'token': pool.token.address, 'pool': pool.pool.address,
-                            'coins': [pool.coins[j].address for j in range(pool.N)],
-                            'underlying_coins': [pool.underlying_coins[j].address for j in range(getattr(pool, 'underlying_N', pool.N))]}
+                            'coins': [pool.coins[j].address for j in range(pool.N)]}
                          for k, pool in pools.items()}).encode())
 
     while True:
