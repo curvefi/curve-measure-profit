@@ -16,7 +16,8 @@ pools = {
         'aave': (NewPool, ("0x445FE580eF8d70FF569aB36e80c647af338db351", "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171"), 13479485),
         'atricrypto': (CryptoPool, ('0x751B1e21756bDbc307CBcC5085c042a0e9AaEf36',
                                     '0x8096ac61db23291252574D49f036f0f9ed8ab390',
-                                    '0x445FE580eF8d70FF569aB36e80c647af338db351'), 14885115)
+                                    '0x445FE580eF8d70FF569aB36e80c647af338db351'), 14885115),
+        'ren': (NewPool, ("0xC2d95EEF97Ec6C17551d45e77B590dc1F9117C67", "0xf8a57c1d3b9629b77b6726a042ca48990A84Fb49"), 15601243),
 }
 start_blocks = {}
 
@@ -71,7 +72,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 14885115
+    start_block = 15601243
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
