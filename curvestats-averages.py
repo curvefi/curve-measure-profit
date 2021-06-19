@@ -33,12 +33,13 @@ if __name__ == "__main__":
     decimals = {
             '2pool': [18, 6],
             'fusdt': [6, 18],
+            'ren': [8, 8],
     }
     underlying_decimals = {'fusdt': [6, 18, 6]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['2pool', 'fusdt']
+    pools = ['2pool', 'fusdt', 'ren']
     andred_pools = set(['fusdt'])
     ctr = 0
     while True:
