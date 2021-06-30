@@ -5,9 +5,9 @@ from time import time
 import lmdb
 import json
 
-DB_NAME = 'polygon.lmdb'  # <- DB [block][pool#]{...}
-DIR = 'json-polygon'
-START_BLOCK = 13479485
+DB_NAME = 'xdai.lmdb'  # <- DB [block][pool#]{...}
+DIR = 'json-xdai'
+START_BLOCK = 16837058
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
@@ -30,17 +30,15 @@ def get_block(b):
 if __name__ == "__main__":
     b = START_BLOCK
     decimals = {
-            'aave': [18, 6, 6],
-            'atricrypto': [18, 8, 18],
-            'ren': [8, 8],
+            '3pool': [18, 6, 6],
     }
-    underlying_decimals = {'aave': [18, 6, 6], 'atricrypto': [18, 6, 6, 8, 18], 'ren': [8, 8]}
+    underlying_decimals = {'3pool': [18, 6, 6]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['aave', 'atricrypto', 'ren']
-    pool_names = {'aave': 'aave', 'atricrypto': 'atricrypto', 'ren': 'ren'}
-    meta = {'atricrypto': 'aave'}
+    pools = ['3pool']
+    pool_names = {'3pool': '3pool'}
+    meta = {}
     ctr = 0
     while True:
         block = get_block(b)
