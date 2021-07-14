@@ -79,7 +79,7 @@ class Pool:
             'mid_fee': self.pool.mid_fee().call(**kw),
             'out_fee': self.pool.out_fee().call(**kw),
             'admin_fee': self.pool.admin_fee().call(**kw),
-            'price_threshold': self.pool.price_threshold().call(**kw),
+            'adjustment_step': self.pool.adjustment_step().call(**kw),
             'fee_gamma': self.pool.fee_gamma().call(**kw),
             'price_scale': [self.pool.price_scale(i).call(**kw) for i in range(self.N-1)],
             'supply': self.token.totalSupply().call(**kw),
