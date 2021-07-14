@@ -12,7 +12,8 @@ from curvestats.tricrypto import Pool as CryptoPool
 MPOOL_SIZE = 25
 
 pools = {
-        'tricrypto': (CryptoPool, ('0x80466c64868E1ab14a1Ddf27A676C3fcBE638Fe5', '0xcA3d75aC011BF5aD07a98d02f18225F9bD9A6BDF'), 12521539)
+        'tricrypto': (CryptoPool, ('0x80466c64868E1ab14a1Ddf27A676C3fcBE638Fe5', '0xcA3d75aC011BF5aD07a98d02f18225F9bD9A6BDF'), 12521539),
+        'tricrypto2': (CryptoPool, ('0xD51a44d3FaE010294C616388b506AcdA1bfAAE46', '0xc4AD29ba4B3c580e6D59105FFf484999997675Ff'), 12821149)
 }
 start_blocks = {}
 
@@ -67,7 +68,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 12521539
+    start_block = 12821149
     print('Monitor started')
 
     # Initial data
