@@ -62,6 +62,7 @@ pools = {
         'alusd': (MetaPoolU, ("0x43b4FdFD4Ff969587185cDB6f0BD875c5Fc83f8c", "0x43b4FdFD4Ff969587185cDB6f0BD875c5Fc83f8c"), 11955334),
         'reth': (RETHPool, ("0xF9440930043eb3997fc70e1339dBb11F341de7A8", "0x53a901d48795C58f485cBB38df08FA96a24669D5"), 12463577),
         'mim': (MetaPoolU, ("0x5a6A4D54456819380173272A5E8E9B9904BdF41B", "0x5a6A4D54456819380173272A5E8E9B9904BdF41B"), 12557140),
+        'eurt': (MetaPoolU, ("0xFD5dB7463a3aB53fD211b4af195c5BCCC1A03890", "0xFD5dB7463a3aB53fD211b4af195c5BCCC1A03890"), 12914705),
 }
 start_blocks = {}
 
@@ -108,7 +109,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 12557140
+    start_block = 12914705
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 

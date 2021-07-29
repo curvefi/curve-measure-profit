@@ -70,6 +70,7 @@ if __name__ == "__main__":
             'alusd': [18, 18],
             'reth': [18, 18],
             'mim': [18, 18],
+            'eurt': [18, 18],
     }
     underlying_decimals = {
             'gusd': [2, 18, 6, 6], 'husd': [8, 18, 6, 6], 'usdn': [18, 18, 6, 6], 'usdk': [18, 18, 6, 6],
@@ -77,14 +78,15 @@ if __name__ == "__main__":
             'dusd': [18, 18, 6, 6], 'pbtc': [18, 8, 8, 18], 'bbtc': [8, 8, 8, 18], 'obtc': [18, 8, 8, 18],
             'ust': [18, 18, 6, 6], 'seth': [18, 18], 'aave': [18, 6, 6], 'idle': [18, 6, 6], 'ankreth': [18, 18],
             'usdp': [18, 18, 6, 6], 'tusd': [18, 18, 6, 6], 'frax': [18, 18, 6, 6], 'lusd': [18, 18, 6, 6],
-            'busdv2': [18, 18, 6, 6], 'alusd': [18, 18, 6, 6], 'reth': [18, 18], 'mim': [18, 18, 6, 6]}
+            'busdv2': [18, 18, 6, 6], 'alusd': [18, 18, 6, 6], 'reth': [18, 18], 'mim': [18, 18, 6, 6],
+            'eurt': [18, 18]}
     start_blocks = {'tbtc': 11095929, 'usdp': 11922058}
     virtual_prices = []
     daily_volumes = defaultdict(float)
     pools = ['compound', 'usdt', 'y', 'busd', 'susd', 'pax', 'ren2', 'rens', 'hbtc', '3pool', 'gusd', 'husd', 'usdn',
              'usdk', 'linkusd', 'musd', 'rsv', 'tbtc', 'dusd', 'pbtc', 'bbtc', 'obtc', 'ust', 'eurs', 'seth', 'aave',
              'idle', 'steth', 'saave', 'ankreth', 'ib', 'link', 'usdp', 'tusd', 'frax', 'lusd', 'busdv2', 'alusd',
-             'reth', 'mim']
+             'reth', 'mim', 'eurt']
     ctr = 0
     while True:
         block = get_block(b)
