@@ -39,7 +39,7 @@ if __name__ == "__main__":
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['aave', 'atricrypto', 'ren']
+    pools = ['aave', 'atricrypto', 'ren', 'atricrypto2']
     pool_names = {'aave': 'aave', 'atricrypto': 'atricrypto', 'ren': 'ren', 'atricrypto2': 'atricrypto2'}
     meta = {'atricrypto': 'aave', 'atricrypto2': 'aave'}
     ctr = 0
