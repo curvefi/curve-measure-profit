@@ -18,6 +18,9 @@ pools = {
                                     '0x8096ac61db23291252574D49f036f0f9ed8ab390',
                                     '0x445FE580eF8d70FF569aB36e80c647af338db351'), 14885115),
         'ren': (NewPool, ("0xC2d95EEF97Ec6C17551d45e77B590dc1F9117C67", "0xf8a57c1d3b9629b77b6726a042ca48990A84Fb49"), 15601243),
+        'atricrypto2': (CryptoPool, ('0x92577943c7aC4accb35288aB2CC84D75feC330aF',
+                                     '0xbece5d20A8a104c54183CC316C8286E3F00ffC71',
+                                     '0x445FE580eF8d70FF569aB36e80c647af338db351'), 17983466),
 }
 start_blocks = {}
 
