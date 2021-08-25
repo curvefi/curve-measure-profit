@@ -69,7 +69,7 @@ class Pool:
         block = full_block['number']
         timestamp = full_block['timestamp']
         kw = {'block_identifier': block}
-        vprice = self.stableswap.get_virtual_price().call(**kw)
+        vprice = self.stableswap.virtual_price().call(**kw)
         price_oracle = [self.pool.price_oracle(i).call(**kw) for i in range(self.N-1)]
         rates = [vprice] + [10**18] * (self.N - 1)
         prices = [1.0] + [p * vprice / 1e36 for p in price_oracle]
@@ -89,7 +89,7 @@ class Pool:
                 'tokens_bought': ev['tokens_bought'] * rates[ev['bought_id']] // 10**18})
 
         try:
-            vprice = is_deposited and self.pool.get_virtual_price().call(**kw)
+            vprice = is_deposited and self.pool.virtual_price().call(**kw)
         except Exception as e:
             print(block, e)
             vprice = 0
