@@ -21,6 +21,9 @@ pools = {
         'atricrypto2': (CryptoPool, ('0x92577943c7aC4accb35288aB2CC84D75feC330aF',
                                      '0xbece5d20A8a104c54183CC316C8286E3F00ffC71',
                                      '0x445FE580eF8d70FF569aB36e80c647af338db351'), 17983466),
+        'atricrypto3': (CryptoPool, ('0x92215849c439E1f8612b6646060B4E3E5ef822cC',
+                                     '0xdAD97F7713Ae9437fa9249920eC8507e5FbB23d3',
+                                     '0x445FE580eF8d70FF569aB36e80c647af338db351'), 18429239),
 }
 start_blocks = {}
 
@@ -75,7 +78,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 18388830
+    start_block = 18429239
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 

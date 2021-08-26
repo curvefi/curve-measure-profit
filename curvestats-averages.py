@@ -34,14 +34,15 @@ if __name__ == "__main__":
             'atricrypto': [18, 8, 18],
             'ren': [8, 8],
             'atricrypto2': [18, 8, 18],
+            'atricrypto3': [18, 8, 18],
     }
-    underlying_decimals = {'aave': [18, 6, 6], 'atricrypto': [18, 6, 6, 8, 18], 'ren': [8, 8], 'atricrypto2': [18, 6, 6, 8, 18]}
+    underlying_decimals = {'aave': [18, 6, 6], 'atricrypto': [18, 6, 6, 8, 18], 'ren': [8, 8], 'atricrypto2': [18, 6, 6, 8, 18], 'atricrypto3': [18, 6, 6, 8, 18]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['aave', 'atricrypto', 'ren', 'atricrypto2']
-    pool_names = {'aave': 'aave', 'atricrypto': 'atricrypto', 'ren': 'ren', 'atricrypto2': 'atricrypto2'}
-    meta = {'atricrypto': 'aave', 'atricrypto2': 'aave'}
+    pools = ['aave', 'atricrypto', 'ren', 'atricrypto2', 'atricrypto3']
+    pool_names = {'aave': 'aave', 'atricrypto': 'atricrypto', 'ren': 'ren', 'atricrypto2': 'atricrypto2', 'atricrypto3': 'atricrypto3'}
+    meta = {'atricrypto': 'aave', 'atricrypto2': 'aave', 'atricrypto3': 'aave'}
     ctr = 0
     while True:
         block = get_block(b)
