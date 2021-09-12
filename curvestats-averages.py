@@ -7,7 +7,7 @@ import json
 
 DB_NAME = 'polygon.lmdb'  # <- DB [block][pool#]{...}
 DIR = 'json-polygon'
-START_BLOCK = 13479485
+START_BLOCK = 534055
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
@@ -30,19 +30,15 @@ def get_block(b):
 if __name__ == "__main__":
     b = START_BLOCK
     decimals = {
-            'aave': [18, 6, 6],
-            'atricrypto': [18, 8, 18],
-            'ren': [8, 8],
-            'atricrypto2': [18, 8, 18],
-            'atricrypto3': [18, 8, 18],
+            '2pool': [6, 6],
     }
-    underlying_decimals = {'aave': [18, 6, 6], 'atricrypto': [18, 6, 6, 8, 18], 'ren': [8, 8], 'atricrypto2': [18, 6, 6, 8, 18], 'atricrypto3': [18, 6, 6, 8, 18]}
+    underlying_decimals = {'2pool': [6, 6]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['aave', 'atricrypto', 'ren', 'atricrypto2', 'atricrypto3']
-    pool_names = {'aave': 'aave', 'atricrypto': 'atricrypto', 'ren': 'ren', 'atricrypto2': 'atricrypto2', 'atricrypto3': 'atricrypto3'}
-    meta = {'atricrypto': 'aave', 'atricrypto2': 'aave', 'atricrypto3': 'aave'}
+    pools = ['2pool']
+    pool_names = {'2pool': '2pool'}
+    meta = {}
     ctr = 0
     while True:
         block = get_block(b)
