@@ -44,6 +44,8 @@ class Pool:
                 else:
                     break
 
+        self.underlying_coins = self.coins
+
     @retry(Exception, delay=5, tries=5, backoff=2)
     def fetch_stats(self, block='latest'):
         full_block = self.w3.eth.getBlock(block)
