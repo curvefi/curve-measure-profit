@@ -32,13 +32,14 @@ if __name__ == "__main__":
     decimals = {
             '2pool': [6, 6],
             'tricrypto': [6, 8, 18],
+            'ren': [8, 8],
     }
-    underlying_decimals = {'2pool': [6, 6], 'tricrypto': [6, 8, 18]}
+    underlying_decimals = {'2pool': [6, 6], 'tricrypto': [6, 8, 18], 'ren': [8, 8]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['2pool', 'tricrypto']
-    pool_names = {'2pool': '2pool', 'tricrypto': 'tricrypto'}
+    pools = ['2pool', 'tricrypto', 'ren']
+    pool_names = {'2pool': '2pool', 'tricrypto': 'tricrypto', 'ren': 'ren'}
     meta = {}
     ctr = 0
     while True:
