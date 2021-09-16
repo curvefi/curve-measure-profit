@@ -65,6 +65,8 @@ if __name__ == "__main__":
                 continue
 
             for tick in TICKS:
+                if 'timestamp' not in block[pool]:
+                    continue
                 ts = block[pool]['timestamp'] // (tick * 60) * (tick * 60)
                 if tick not in summarized_data[pool]:
                     summarized_data[pool][tick] = {}
