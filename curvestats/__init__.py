@@ -2,13 +2,13 @@
 """
 Recording full statistics about the state of Curve pools
 """
-from retry import retry
+# from retry import retry
 from web3.exceptions import BadFunctionCallOutput, ABIFunctionNotFound, ABIEventFunctionNotFound
 from .abi import ABI, TOKEN_ABI
 
 
 class Pool:
-    @retry(Exception, delay=5, tries=5, backoff=2)
+    # @retry(Exception, delay=5, tries=5, backoff=2)
     def __init__(self, pool, token, w3=None, abi=ABI):
         if not w3:
             from .w3 import w3 as our_w3
@@ -47,7 +47,7 @@ class Pool:
     def get_rate(self, i, block=None):
         return 10 ** 18
 
-    @retry(Exception, delay=5, tries=5, backoff=2)
+    # @retry(Exception, delay=5, tries=5, backoff=2)
     def fetch_stats(self, block='latest'):
         full_block = self.w3.eth.getBlock(block)
         block = full_block['number']
