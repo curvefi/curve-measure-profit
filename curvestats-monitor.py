@@ -8,26 +8,17 @@ from multiprocessing import Pool
 from functools import partial
 
 from curvestats.newpool import NewPool
-from curvestats.cryptometastable import Pool as CryptoPool
+from curvestats.cryptometastable import Pool as CryptoPool  # noqa
 
 MPOOL_SIZE = 25
 
 pools = {
-        'aave': (NewPool, ("0x445FE580eF8d70FF569aB36e80c647af338db351", "0xE7a24EF0C5e95Ffb0f6684b813A78F2a3AD7D171"), 13479485),
-        'atricrypto': (CryptoPool, ('0x751B1e21756bDbc307CBcC5085c042a0e9AaEf36',
-                                    '0x8096ac61db23291252574D49f036f0f9ed8ab390',
-                                    '0x445FE580eF8d70FF569aB36e80c647af338db351'), 14885115),
-        'ren': (NewPool, ("0xC2d95EEF97Ec6C17551d45e77B590dc1F9117C67", "0xf8a57c1d3b9629b77b6726a042ca48990A84Fb49"), 15601243),
-        'atricrypto2': (CryptoPool, ('0x92577943c7aC4accb35288aB2CC84D75feC330aF',
-                                     '0xbece5d20A8a104c54183CC316C8286E3F00ffC71',
-                                     '0x445FE580eF8d70FF569aB36e80c647af338db351'), 17983466),
-        'atricrypto3': (CryptoPool, ('0x92215849c439E1f8612b6646060B4E3E5ef822cC',
-                                     '0xdAD97F7713Ae9437fa9249920eC8507e5FbB23d3',
-                                     '0x445FE580eF8d70FF569aB36e80c647af338db351'), 18429239),
+        'aave': (NewPool, ("0x7f90122BF0700F9E7e1F688fe926940E8839F353", "0x1337BedC9D22ecbe766dF105c9623922A27963EC"), 5208779),
+        # 'atricrypto': (CryptoPool, ('', '', ''), 0),
 }
 start_blocks = {}
 
-DB_NAME = 'polygon.lmdb'  # <- DB [block][pool#]{...}
+DB_NAME = 'avalanche.lmdb'  # <- DB [block][pool#]{...}
 
 
 def init_pools():
@@ -78,7 +69,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 18429239
+    start_block = 5208779
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
