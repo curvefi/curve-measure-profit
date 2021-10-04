@@ -5,8 +5,8 @@ from time import time
 import lmdb
 import json
 
-DB_NAME = 'polygon.lmdb'  # <- DB [block][pool#]{...}
-DIR = 'json-polygon'
+DB_NAME = 'avalanche.lmdb'  # <- DB [block][pool#]{...}
+DIR = 'json-avalanche'
 START_BLOCK = 5208779
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
