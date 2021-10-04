@@ -14,6 +14,7 @@ MPOOL_SIZE = 25
 
 pools = {
         'aave': (NewPool, ("0x7f90122BF0700F9E7e1F688fe926940E8839F353", "0x1337BedC9D22ecbe766dF105c9623922A27963EC"), 5208779),
+        'ren': (NewPool, ("0x16a7DA911A4DD1d83F3fF066fE28F3C792C50d90", "0xC2b1DF84112619D190193E48148000e3990Bf627"), 5216434),
         # 'atricrypto': (CryptoPool, ('', '', ''), 0),
 }
 start_blocks = {}
