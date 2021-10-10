@@ -45,7 +45,7 @@ if __name__ == "__main__":
         if not block or 'timestamp' not in block[pools[0]]:
             ctr += 1
             b += 1
-            if not block and ctr > 100:
+            if not block and ctr > 300000:
                 break
             continue
         else:
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
         virtual_prices.append(
                 [block[pools[0]]['timestamp']] +
-                [block[pool]['virtual_price'] / 1e18 if pool in block else 0 for pool in pools])
+                [block[pool]['virtual_price'] / 1e18 if pool in block and 'virtual_price' in block[pool] else 0 for pool in pools])
 
         for pool in block:
             if pool not in summarized_data:
@@ -63,6 +63,8 @@ if __name__ == "__main__":
                 continue
 
             for tick in TICKS:
+                if 'timestamp' not in block[pool]:
+                    continue
                 ts = block[pool]['timestamp'] // (tick * 60) * (tick * 60)
                 if tick not in summarized_data[pool]:
                     summarized_data[pool][tick] = {}
