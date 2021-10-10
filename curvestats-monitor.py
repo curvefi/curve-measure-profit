@@ -68,8 +68,8 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 18000572
-    # start_block = w3.eth.getBlock('latest')['number'] - 1000
+    # start_block = 18000572
+    start_block = w3.eth.getBlock('latest')['number'] - 100
     print('Monitor started')
 
     # Initial data
