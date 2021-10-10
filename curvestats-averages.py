@@ -5,9 +5,9 @@ from time import time
 import lmdb
 import json
 
-DB_NAME = 'avalanche.lmdb'  # <- DB [block][pool#]{...}
-DIR = 'json-avalanche'
-START_BLOCK = 5208779
+DB_NAME = 'harmony.lmdb'  # <- DB [block][pool#]{...}
+DIR = 'json-harmony'
+START_BLOCK = 18000572
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
@@ -30,17 +30,15 @@ def get_block(b):
 if __name__ == "__main__":
     b = START_BLOCK
     decimals = {
-            'aave': [18, 6, 6],
-            'ren': [8, 8],
-            'atricrypto': [18, 8, 18],
+            '3pool': [18, 6, 6],
     }
-    underlying_decimals = {'aave': [18, 6, 6], 'ren': [8, 8], 'atricrypto': [18, 6, 6, 8, 18]}
+    underlying_decimals = {'3pool': [18, 6, 6]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['aave', 'ren', 'atricrypto']
-    pool_names = {'aave': 'aave', 'ren': 'ren', 'atricrypto': 'atricrypto'}
-    meta = {'atricrypto': 'aave'}
+    pools = ['3pool']
+    pool_names = {'3pool': '3pool'}
+    meta = {}
     ctr = 0
     while True:
         block = get_block(b)
