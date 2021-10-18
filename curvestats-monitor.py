@@ -20,7 +20,8 @@ pools = {
                              "0x27E611FD27b276ACbd5Ffd632E5eAEBEC9761E40"), 3182906),
         'ren': (NewPool, ("0x3eF6A01A0f81D6046290f3e2A8c5b843e738E604", "0x5B5CFE992AdAC0C9D48E05854B2d91C73a003858"), 9464131),
         'tricrypto': (CryptoPool, ("0x3a1659Ddcf2339Be3aeA159cA010979FB49155FF", "0x58e57cA18B7A47112b877E31929798Cd3D703b0f"), 17198626),
-        'ibftm': (YV2Pool, ("0x4FC8D635c3cB1d0aa123859e2B2587d0FF2707b1", "0xDf38ec60c0eC001142a33eAa039e49E9b84E64ED"), 19000245)
+        'ibftm': (YV2Pool, ("0x4FC8D635c3cB1d0aa123859e2B2587d0FF2707b1", "0xDf38ec60c0eC001142a33eAa039e49E9b84E64ED"), 19000245),
+        'geist': (NewPool, ("0x0fa949783947Bf6c1b171DB13AEACBB488845B3f", "0xD02a30d33153877BC20e5721ee53DeDEE0422B2F"), 19420478)
 }
 start_blocks = {}
 
@@ -38,8 +39,8 @@ def fetch_stats(block, i='compound'):
     try:
         init_pools()
         return pools[i].fetch_stats(block)
-    except ValueError as e:
-        if 'missing trie node' in str(e):
+    except Exception as e:
+        if 'missing trie node' in str(e) or 'not found' in str(e):
             print('missing trie node for', block)
             return {}
         else:
@@ -75,7 +76,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 19000245
+    start_block = 19420478
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 

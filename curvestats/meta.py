@@ -59,7 +59,7 @@ class MetaPool:
             rate = self.base_pool.get_virtual_price().call(**kw)
         return rate
 
-    @retry(Exception, delay=5, tries=5, backoff=2)
+    # @retry(Exception, delay=5, tries=5, backoff=2)
     def fetch_stats(self, block='latest'):
         full_block = self.w3.eth.getBlock(block)
         block = full_block['number']
