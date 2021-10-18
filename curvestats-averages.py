@@ -7,7 +7,7 @@ import json
 
 DB_NAME = 'harmony.lmdb'  # <- DB [block][pool#]{...}
 DIR = 'json-harmony'
-START_BLOCK = 18000572
+START_BLOCK = 18028000
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
