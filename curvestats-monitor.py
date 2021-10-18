@@ -8,12 +8,15 @@ from multiprocessing import Pool
 from functools import partial
 
 from curvestats.newpool import NewPool
-from curvestats.cryptometastable import Pool as CryptoPool  # noqa
+from curvestats.cryptometastable import Pool as CryptoPool
 
 MPOOL_SIZE = 25
 
 pools = {
         '3pool': (NewPool, ("0xC5cfaDA84E902aD92DD40194f0883ad49639b023", "0xC5cfaDA84E902aD92DD40194f0883ad49639b023"), 18000572),
+        'tricrypto': (CryptoPool, ('0x0e3Dc2BcbFEa84072A0c794B7653d3db364154e0',
+                                   '0x99E8eD28B97c7F1878776eD94fFC77CABFB9B726',
+                                   '0xC5cfaDA84E902aD92DD40194f0883ad49639b023'), 18336165),
 }
 start_blocks = {}
 
