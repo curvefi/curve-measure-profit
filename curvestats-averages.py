@@ -38,7 +38,7 @@ if __name__ == "__main__":
     virtual_prices = []
     daily_volumes = defaultdict(float)
     pools = ['3pool', 'tricrypto']
-    pool_names = {'3pool': '3pool', 'tricrypto': 'tricrypto'}
+    pool_names = {'3pool': '3pool', 'tricrypto': 'wtricrypto'}
     meta = {'tricrypto': '3pool'}
     ctr = 0
     while True:
