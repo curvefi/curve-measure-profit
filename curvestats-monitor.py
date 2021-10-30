@@ -9,6 +9,7 @@ from functools import partial
 
 from curvestats.newpool import NewPool
 from curvestats.tricrypto import Pool as CryptoPool
+from curvestats.forexmeta import Pool as ForexPool
 
 MPOOL_SIZE = 25
 
@@ -16,6 +17,7 @@ pools = {
         '2pool': (NewPool, ("0x7f90122BF0700F9E7e1F688fe926940E8839F353", "0x7f90122BF0700F9E7e1F688fe926940E8839F353"), 534055),
         'tricrypto': (CryptoPool, ("0x960ea3e3C7FB317332d990873d354E18d7645590", "0x8e0B8c8BB9db49a46697F3a5Bb8A308e744821D2"), 741890),
         'ren': (NewPool, ("0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb", "0x3E01dD8a5E1fb3481F0F589056b428Fc308AF0Fb"), 819996),
+        'eursusd': (ForexPool, ("0xA827a652Ead76c6B0b3D19dba05452E06e25c27e", "0x3dFe1324A0ee9d86337d06aEB829dEb4528DB9CA", "0x7f90122BF0700F9E7e1F688fe926940E8839F353"), 2721013)
 }
 start_blocks = {}
 
