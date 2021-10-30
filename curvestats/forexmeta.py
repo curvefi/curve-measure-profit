@@ -63,7 +63,7 @@ class Pool:
                 else:
                     break
         assert self.N == 2
-        assert self.UN >= self.N + 2
+        assert self.UN >= self.N + 1
 
     @retry(Exception, delay=5, tries=5, backoff=2)
     def fetch_stats(self, block='latest'):
