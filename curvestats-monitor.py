@@ -9,6 +9,7 @@ from functools import partial
 
 from curvestats.newpool import NewPool
 from curvestats.cryptometastable import Pool as CryptoPool
+from curvestats.forexmeta import Pool as ForexPool
 
 MPOOL_SIZE = 25
 
@@ -24,6 +25,9 @@ pools = {
         'atricrypto3': (CryptoPool, ('0x92215849c439E1f8612b6646060B4E3E5ef822cC',
                                      '0xdAD97F7713Ae9437fa9249920eC8507e5FbB23d3',
                                      '0x445FE580eF8d70FF569aB36e80c647af338db351'), 18429239),
+        'eurtusd': (ForexPool, ("0xB446BF7b8D6D4276d0c75eC0e3ee8dD7Fe15783A",
+                                "0x600743B1d8A96438bD46836fD34977a00293f6Aa",
+                                "0x445FE580eF8d70FF569aB36e80c647af338db351"), 20777060)
 }
 start_blocks = {}
 
@@ -78,7 +82,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 18429239
+    start_block = 20777060
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
