@@ -8,12 +8,14 @@ from multiprocessing import Pool
 from functools import partial
 
 from curvestats.tricrypto import Pool as CryptoPool
+from curvestats.forexmeta import Pool as ForexPool
 
 MPOOL_SIZE = 25
 
 pools = {
         'tricrypto': (CryptoPool, ('0x80466c64868E1ab14a1Ddf27A676C3fcBE638Fe5', '0xcA3d75aC011BF5aD07a98d02f18225F9bD9A6BDF'), 12521539),
-        'tricrypto2': (CryptoPool, ('0xD51a44d3FaE010294C616388b506AcdA1bfAAE46', '0xc4AD29ba4B3c580e6D59105FFf484999997675Ff'), 12821149)
+        'tricrypto2': (CryptoPool, ('0xD51a44d3FaE010294C616388b506AcdA1bfAAE46', '0xc4AD29ba4B3c580e6D59105FFf484999997675Ff'), 12821149),
+        'eurtusd': (ForexPool, ('0x9838eCcC42659FA8AA7daF2aD134b53984c9427b', '0x3b6831c0077a1e44ED0a21841C3bC4dC11bCE833', '0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7'), 13526620)
 }
 start_blocks = {}
 
@@ -68,7 +70,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 12821149
+    start_block = 13526617
     print('Monitor started')
 
     # Initial data
