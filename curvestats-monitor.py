@@ -9,7 +9,7 @@ from functools import partial
 
 from curvestats.tricrypto import Pool as CryptoPool
 from curvestats.forexmeta import Pool as ForexPool
-from curvestats.forexmeta import Pool as ForexPlain
+from curvestats.forex import Pool as ForexPlain
 
 MPOOL_SIZE = 25
 
