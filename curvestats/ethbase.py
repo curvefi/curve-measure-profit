@@ -24,7 +24,7 @@ class Pool:
 
         self.pool_contract = self.w3.eth.contract(abi=load_abi("ForexMeta"), address=pool)
         self.pool = self.pool_contract.functions
-        self.tricrypto = self.w3.eth.contract(abi=load_abi("CurveCryptoSwap"), address="0xD51a44d3FaE010294C616388b506AcdA1bfAAE46")
+        self.tricrypto = self.w3.eth.contract(abi=load_abi("CurveCryptoSwap"), address="0xD51a44d3FaE010294C616388b506AcdA1bfAAE46").functions
         self.token_contract = self.w3.eth.contract(abi=erc20, address=token)
         self.token = self.token_contract.functions
 
