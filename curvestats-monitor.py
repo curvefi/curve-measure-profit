@@ -18,6 +18,7 @@ from curvestats.idle import IDLEPool
 from curvestats.ankr import ANKRPool
 from curvestats.yv2 import YV2Pool
 from curvestats.reth import RETHPool
+from curvestats.rai import RaiPool
 
 MPOOL_SIZE = 20
 
@@ -63,6 +64,7 @@ pools = {
         'reth': (RETHPool, ("0xF9440930043eb3997fc70e1339dBb11F341de7A8", "0x53a901d48795C58f485cBB38df08FA96a24669D5"), 12463577),
         'mim': (MetaPoolU, ("0x5a6A4D54456819380173272A5E8E9B9904BdF41B", "0x5a6A4D54456819380173272A5E8E9B9904BdF41B"), 12557140),
         'eurt': (MetaPoolU, ("0xFD5dB7463a3aB53fD211b4af195c5BCCC1A03890", "0xFD5dB7463a3aB53fD211b4af195c5BCCC1A03890"), 12914705),
+        'rai': (RaiPool, ("0x618788357D0EBd8A37e763ADab3bc575D54c2C7d", "0x6BA5b4e438FA0aAf7C1bD179285aF65d13bD3D90"), 13634175),
 }
 start_blocks = {}
 
@@ -104,12 +106,12 @@ init_pools()
 
 
 if __name__ == '__main__':
-    from web3.auto.infura import w3
+    from curvestats.w3 import w3
     init_pools()
 
-    db = lmdb.open(DB_NAME, map_size=(2 ** 35))
+    db = lmdb.open(DB_NAME, map_size=(2 ** 36))
 
-    start_block = 12914705
+    start_block = 13634175
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
