@@ -62,6 +62,9 @@ if __name__ == "__main__":
                  for pool in pools])
 
         for pool in block:
+            if 'virtual_price' not in block[pool] or 'timestamp' not in block[pool]:
+                continue
+
             if pool not in summarized_data:
                 summarized_data[pool] = {}
 
