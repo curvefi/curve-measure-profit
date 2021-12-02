@@ -45,10 +45,10 @@ if __name__ == "__main__":
     ctr = 0
     while True:
         block = get_block(b)
-        if not block or 'timestamp' not in block[pools[0]]:
+        if not block or 'timestamp' not in block[pools[0]] or 'virtual_price' not in block[pools[0]]:
             ctr += 1
             b += 1
-            if not block and ctr > 100:
+            if not block and ctr > 1000:
                 break
             continue
         else:
