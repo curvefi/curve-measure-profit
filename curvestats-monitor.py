@@ -107,6 +107,7 @@ init_pools()
 
 if __name__ == '__main__':
     from curvestats.w3 import w3
+    w3 = w3()
     init_pools()
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 36))
