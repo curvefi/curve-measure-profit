@@ -45,7 +45,7 @@ class RaiPool:
             except (BadFunctionCallOutput, ValueError):
                 break
 
-        self.price_snap = self.w3.eth.contract(abi=RAI_PRICE_SNAP, address=self.pool.redemption_price_snap()).functions
+        self.price_snap = self.w3.eth.contract(abi=RAI_PRICE_SNAP, address=self.pool.redemption_price_snap().call()).functions
 
     def get_rate(self, i, underlying=False, block=None):
         if not block:
