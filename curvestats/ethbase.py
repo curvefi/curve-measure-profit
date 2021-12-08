@@ -60,7 +60,7 @@ class Pool:
         price_oracle = self.pool.price_oracle().call(**kw) / 1e18
         price_scale = self.pool.price_scale().call(**kw) / 1e18
 
-        prices = self.tricrypto.price_oracle(0).call(**kw) / 1e18
+        prices = self.tricrypto.price_oracle(1).call(**kw) / 1e18
         prices = [prices, prices * price_oracle]
 
         rates = [10**18, int(price_oracle * 1e18)]
