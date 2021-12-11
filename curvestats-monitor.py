@@ -19,7 +19,8 @@ pools = {
         'tricrypto2': (CryptoPool, ('0xD51a44d3FaE010294C616388b506AcdA1bfAAE46', '0xc4AD29ba4B3c580e6D59105FFf484999997675Ff'), 12821149),
         'eurtusd': (ForexPool, ('0x9838eCcC42659FA8AA7daF2aD134b53984c9427b', '0x3b6831c0077a1e44ED0a21841C3bC4dC11bCE833', '0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7'), 13526620),
         'eursusd': (ForexPlain, ('0x98a7F18d4E56Cfe84E3D081B40001B3d5bD3eB8B', '0x3D229E1B4faab62F621eF2F6A610961f7BD7b23B'), 13530680),
-        'crveth': (EthPool, ('0x8301AE4fc9c624d1D396cbDAa1ed877821D7C511', '0xEd4064f376cB8d68F770FB1Ff088a3d0F3FF5c4d'), 13676996)
+        'crveth': (EthPool, ('0x8301AE4fc9c624d1D396cbDAa1ed877821D7C511', '0xEd4064f376cB8d68F770FB1Ff088a3d0F3FF5c4d'), 13676996),
+        'cvxeth': (EthPool, ('0xB576491F1E6e5E62f1d8F26062Ee822B40B0E0d4', '0x3A283D9c08E8b55966afb64C515f5143cf907611'), 13783426)
 }
 start_blocks = {}
 
@@ -74,7 +75,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 13676996
+    start_block = 13783426
     print('Monitor started')
 
     # Initial data
