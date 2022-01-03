@@ -37,15 +37,18 @@ if __name__ == "__main__":
             'crveth': [18, 18],
             'cvxeth': [18, 18],
             'xautusd': [6, 18],
+            'spelleth': [18, 18],
+            'teth': [18, 18],
     }
     underlying_decimals = {'tricrypto': [6, 8, 18], 'tricrypto2': [6, 8, 18], 'eurtusd': [6, 18, 6, 6],
-                           'eursusd': [6, 2], 'crveth': [18, 18], 'cvxeth': [18, 18], 'xautusd': [6, 18, 6, 6]}
+                           'eursusd': [6, 2], 'crveth': [18, 18], 'cvxeth': [18, 18], 'xautusd': [6, 18, 6, 6],
+                           'spelleth': [18, 18], 'teth': [18, 18]}
     start_blocks = {}
     virtual_prices = []
     daily_volumes = defaultdict(float)
-    pools = ['tricrypto', 'tricrypto2', 'eurtusd', 'eursusd', 'crveth', 'cvxeth', 'xautusd']
+    pools = ['tricrypto', 'tricrypto2', 'eurtusd', 'eursusd', 'crveth', 'cvxeth', 'xautusd', 'spelleth', 'teth']
     pool_names = {'tricrypto': 'tricrypto', 'tricrypto2': 'tricrypto2', 'eurtusd': 'eurtusd', 'eursusd': 'eursusd',
-                  'crveth': 'crveth', 'cvxeth': 'cvxeth', 'xautusd': 'xautusd'}
+                  'crveth': 'crveth', 'cvxeth': 'cvxeth', 'xautusd': 'xautusd', 'spelleth': 'spelleth', 'teth': 'teth'}
     ctr = 0
     while True:
         block = get_block(b)

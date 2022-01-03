@@ -22,6 +22,8 @@ pools = {
         'crveth': (EthPool, ('0x8301AE4fc9c624d1D396cbDAa1ed877821D7C511', '0xEd4064f376cB8d68F770FB1Ff088a3d0F3FF5c4d'), 13676996),
         'cvxeth': (EthPool, ('0xB576491F1E6e5E62f1d8F26062Ee822B40B0E0d4', '0x3A283D9c08E8b55966afb64C515f5143cf907611'), 13783426),
         'xautusd': (ForexPool, ('0xAdCFcf9894335dC340f6Cd182aFA45999F45Fc44', '0x8484673cA7BfF40F82B041916881aeA15ee84834', '0xbEbc44782C7dB0a1A60Cb6fe97d0b483032FF1C7'), 13854277),
+        'spelleth': (EthPool, ('0x98638FAcf9a3865cd033F36548713183f6996122', '0x8282BD15dcA2EA2bDf24163E8f2781B30C43A2ef'), 13931747),
+        'teth': (EthPool, ('0x752eBeb79963cf0732E9c0fec72a49FD1DEfAEAC', '0xCb08717451aaE9EF950a2524E33B6DCaBA60147B'), 13931850),
 }
 start_blocks = {}
 
@@ -76,7 +78,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 13854277
+    start_block = 13931850
     print('Monitor started')
 
     # Initial data
