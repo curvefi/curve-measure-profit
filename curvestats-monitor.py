@@ -12,11 +12,11 @@ from curvestats.newpool import NewPool
 MPOOL_SIZE = 20
 
 pools = {
-        '3pool': (NewPool, ("0x7f90122BF0700F9E7e1F688fe926940E8839F353", "0x1337BedC9D22ecbe766dF105c9623922A27963EC"), 16837058),
+        '3pool': (NewPool, ("0x1337BedC9D22ecbe766dF105c9623922A27963EC", "0x1337BedC9D22ecbe766dF105c9623922A27963EC"), 2371329),
 }
 start_blocks = {}
 
-DB_NAME = 'xdai.lmdb'  # <- DB [block][pool#]{...}
+DB_NAME = 'optimism.lmdb'  # <- DB [block][pool#]{...}
 
 
 def init_pools():
@@ -68,7 +68,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 16837058
+    start_block = 2371329
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 

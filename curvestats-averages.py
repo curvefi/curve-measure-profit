@@ -5,9 +5,9 @@ from time import time
 import lmdb
 import json
 
-DB_NAME = 'xdai.lmdb'  # <- DB [block][pool#]{...}
-DIR = 'json-xdai'
-START_BLOCK = 16837058
+DB_NAME = 'optimism.lmdb'  # <- DB [block][pool#]{...}
+DIR = 'json-optimism'
+START_BLOCK = 2371329
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
