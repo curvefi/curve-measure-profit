@@ -53,9 +53,12 @@ def int2uid(value):
     return int.to_bytes(value, 4, 'big')
 
 
+replace_block = (14341000, 14348231)
+
+
 def pools_not_in_block(tx, b):
-    # if b > 13943232 and b < 13953232:
-    #     return list(pools)
+    if b > replace_block[0] and b < replace_block[1]:
+        return list(pools)
     out = []
     block = tx.get(int2uid(b))
     if block:
@@ -80,7 +83,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 13943232
+    start_block = 14341000
     print('Monitor started')
 
     # Initial data
