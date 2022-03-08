@@ -63,7 +63,7 @@ class Pool:
         prices = self.tricrypto.price_oracle(1).call(**kw) / 1e18
         prices = [prices, prices * price_oracle]
 
-        rates = [10**(36 - d) for d in self.decimals]
+        rates = [10**18, int(price_oracle * 1e18)]
         balances = [self.pool.balances(i).call(**kw) for i in range(self.N)]
         is_deposited = True
         for b in balances:

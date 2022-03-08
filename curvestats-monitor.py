@@ -54,6 +54,8 @@ def int2uid(value):
 
 
 def pools_not_in_block(tx, b):
+    # if b > 13943232 and b < 13953232:
+    #     return list(pools)
     out = []
     block = tx.get(int2uid(b))
     if block:
@@ -78,12 +80,12 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 35))
 
-    start_block = 13931850
+    start_block = 13943232
     print('Monitor started')
 
     # Initial data
     with db.begin(write=True) as tx:
-        if pools_not_in_block(tx, 0) or True:  # XXX
+        if pools_not_in_block(tx, 0):  # XXX
             tx.put(int2uid(0), json.dumps(
                         {k: {
                             'N': pool.N,
