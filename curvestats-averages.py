@@ -5,8 +5,8 @@ from time import time
 import lmdb
 import json
 
-DB_NAME = 'moonbeam.lmdb'  # <- DB [block][pool#]{...}
-DIR = 'json-moonbeam'
+DB_NAME = 'aurora.lmdb'  # <- DB [block][pool#]{...}
+DIR = 'json-aurora'
 START_BLOCK = 396326
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400

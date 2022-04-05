@@ -12,11 +12,11 @@ from curvestats.newpool import NewPool
 MPOOL_SIZE = 20
 
 pools = {
-        '3pool': (NewPool, ("0xace58a26b8Db90498eF0330fDC9C2655db0C45E2", "0xace58a26b8Db90498eF0330fDC9C2655db0C45E2"), 396326),
+        '3pool': (NewPool, ("0xbF7E49483881C76487b0989CD7d9A8239B20CA41", "0xbF7E49483881C76487b0989CD7d9A8239B20CA41"), 62441453),
 }
 start_blocks = {}
 
-DB_NAME = 'moonbeam.lmdb'  # <- DB [block][pool#]{...}
+DB_NAME = 'aurora.lmdb'  # <- DB [block][pool#]{...}
 
 
 def init_pools():
