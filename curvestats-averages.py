@@ -7,7 +7,7 @@ import json
 
 DB_NAME = 'aurora.lmdb'  # <- DB [block][pool#]{...}
 DIR = 'json-aurora'
-START_BLOCK = 396326
+START_BLOCK = 62441453
 TICKS = [1, 5, 10, 15, 30, 60 * 24]  # min
 day_ago = time() - 86400
 
