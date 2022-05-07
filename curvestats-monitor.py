@@ -72,9 +72,11 @@ DB_NAME = 'curvestats.lmdb'  # <- DB [block][pool#]{...}
 
 
 def init_pools():
+    from curvestats.w3 import w3
+    w3 = w3()
     for i, p in pools.items():
         if isinstance(p, tuple):
-            pools[i] = p[0](*p[1])
+            pools[i] = p[0](*p[1], w3=w3)
             start_blocks[i] = p[2]
 
 
@@ -112,7 +114,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 36))
 
-    start_block = 13634175
+    start_block = 14070000
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 

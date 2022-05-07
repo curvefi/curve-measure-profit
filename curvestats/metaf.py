@@ -16,6 +16,8 @@ class MetaPoolU:
         if not w3:
             from web3.auto.infura import w3 as infura_w3
             self.w3 = infura_w3
+        else:
+            self.w3 = w3
         self.pool_contract = self.w3.eth.contract(abi=abi, address=pool)
         self.pool = self.pool_contract.functions
         self.token_contract = self.w3.eth.contract(abi=TOKEN_ABI, address=token)
