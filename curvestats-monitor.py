@@ -65,6 +65,8 @@ pools = {
         'mim': (MetaPoolU, ("0x5a6A4D54456819380173272A5E8E9B9904BdF41B", "0x5a6A4D54456819380173272A5E8E9B9904BdF41B"), 12557140),
         'eurt': (MetaPoolU, ("0xFD5dB7463a3aB53fD211b4af195c5BCCC1A03890", "0xFD5dB7463a3aB53fD211b4af195c5BCCC1A03890"), 12914705),
         'rai': (RaiPool, ("0x618788357D0EBd8A37e763ADab3bc575D54c2C7d", "0x6BA5b4e438FA0aAf7C1bD179285aF65d13bD3D90"), 13634175),
+        '4pool': (NewPool, ("0x4e0915C88bC70750D68C481540F081fEFaF22273", "0x4e0915C88bC70750D68C481540F081fEFaF22273"), 14631360),
+        '2pool': (NewPool, ("0x1005f7406f32a61bd760cfa14accd2737913d546", "0x1005f7406f32a61bd760cfa14accd2737913d546"), 14631074 ),
 }
 start_blocks = {}
 
@@ -114,7 +116,7 @@ if __name__ == '__main__':
 
     db = lmdb.open(DB_NAME, map_size=(2 ** 36))
 
-    start_block = 14070000
+    start_block = 14631074
     # start_block = w3.eth.getBlock('latest')['number'] - 1000
     print('Monitor started')
 
