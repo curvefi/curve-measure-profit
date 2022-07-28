@@ -1,2 +1,5 @@
 web3
 ipython
+retry
+numpy
+matplotlib
